@@ -5,7 +5,20 @@ class CubeLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      body: Column(
+        children: [
+          Row(
+            children: [
+              Expanded(
+                flex: 1,
+                backgroundColor 
+              )
+            ],
+          )
+        ],
+      )
+    );
     
   }
 }
