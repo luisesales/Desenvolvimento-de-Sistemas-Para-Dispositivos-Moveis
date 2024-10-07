@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {  
     return MaterialApp(
       title: 'Meu App Ola Mundo',
-      home: Forms(),
+      home: CubeLayout(),
     );
   }
 }
