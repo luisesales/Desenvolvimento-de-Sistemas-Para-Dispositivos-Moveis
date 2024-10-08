@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'cubeLayout.dart';
 import 'forms.dart';
+import 'IMC.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {  
     return MaterialApp(
       title: 'Meu App Ola Mundo',
-      home: Forms(),
+      home: IMC(),
     );
   }
 }

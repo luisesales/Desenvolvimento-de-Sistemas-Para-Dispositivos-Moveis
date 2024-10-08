@@ -6,6 +6,21 @@ class CubeLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
+      appBar: AppBar(
+        title: Container(
+          child: Row(
+            children: [
+              IconButton(onPressed: () {}, icon: Icon(Icons.arrow_back)),
+              Text("Cube Layout"),
+              Spacer(),
+              IconButton(onPressed: () {}, icon: Icon(Icons.more_vert)),
+            ],
+          ),
+          //margin: EdgeInsets.all(4),
+        ),
+        backgroundColor: Color.fromRGBO(1, 78, 78, 1),
+      ),
       body: SingleChildScrollView(child : Column(
         children: [
           Row(
