@@ -6,7 +6,7 @@ class CubeLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
+      body: SingleChildScrollView(child : Column(
         children: [
           Row(
             children: [
@@ -139,7 +139,7 @@ class CubeLayout extends StatelessWidget {
           ),
         ],
       )
-    );
-    
+    )
+    );    
   }
 }

@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
 
-class Forms extends StatelessWidget {
+class Forms extends StatefulWidget {
   const Forms({super.key});
 
   @override
+  State<Forms> createState() => _FormsState();
+}
+
+class _FormsState extends State<Forms> {
+  @override
   Widget build(BuildContext context) {
+    String? selectedCountry, selectedState;
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Container(
           child: Row(
@@ -20,7 +27,7 @@ class Forms extends StatelessWidget {
         ),
         backgroundColor: Color.fromRGBO(1, 78, 78, 1),
       ),
-      body: Container(
+      body: SingleChildScrollView(child : Container(
         padding: EdgeInsets.all(32),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -136,16 +143,23 @@ class Forms extends StatelessWidget {
                       SizedBox(width: 16), // Adiciona um espaço entre os campos
                       Expanded(
                         flex: 2,
-                        child: TextFormField(
-                          decoration: InputDecoration(
-                            labelText: 'State',                            
+                        child: Center(
+                          child: DropdownButton<String>(
+                            hint: Text(selectedState ?? "State"),
+                            value: selectedState,
+                            isExpanded: true,
+                            items: ["Rio Grande do Norte","Texas", "Christmas Island"].map((String item) {
+                              return DropdownMenuItem<String>(
+                                value: item,
+                                child: Text(item),
+                              );
+                            }).toList(),
+                            onChanged: (String? newValue) {
+                              setState(() {
+                                selectedCountry = newValue;
+                              });
+                            },
                           ),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please insert a valid state';
-                            }
-                            return null;
-                          },
                         ),
                       ),
                     ],
@@ -169,15 +183,21 @@ class Forms extends StatelessWidget {
                       SizedBox(width: 16), // Adiciona um espaço entre os campos
                       Expanded(
                         flex: 2,
-                        child: TextFormField(
-                          decoration: InputDecoration(
-                            labelText: 'Countrt',                            
-                          ),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please insert a valid Country';
-                            }
-                            return null;
+                        child: DropdownButton<String>(
+                          hint: Text(selectedCountry ?? "Country"),
+                          value: selectedCountry,
+                          isExpanded: true,
+                          items: ["Brazil","E.U.A", "Australia"].map((String item) {
+                            return DropdownMenuItem<String>(
+                              value: item,
+                              child: Text(item),
+                            );
+                          }).toList(),
+                          onChanged: (String? newValue) {
+                            setState(() {
+                              selectedCountry = newValue;
+
+                            });
                           },
                         ),
                       ),
@@ -189,6 +209,7 @@ class Forms extends StatelessWidget {
           ],
         ),
       ),
+    )
     );
   }
 }
