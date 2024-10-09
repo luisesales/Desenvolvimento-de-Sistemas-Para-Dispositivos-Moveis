@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class Forms extends StatefulWidget {
   const Forms({super.key});
@@ -8,6 +9,25 @@ class Forms extends StatefulWidget {
 }
 
 class _FormsState extends State<Forms> {
+
+  DateTime _dataSelecionada = DateTime.now();
+
+  void _showDatePicker() {
+    showDatePicker(
+            context: context,
+            initialDate: DateTime.now(),
+            firstDate: DateTime.now(),
+            lastDate: DateTime(2025))
+        .then((pickedDate) {
+      //chamada no futuro
+      if (pickedDate == null) {
+        return;
+      }
+      setState(() {
+        _dataSelecionada = pickedDate;
+      });
+    });
+  
   @override
   Widget build(BuildContext context) {
     String? selectedCountry, selectedState;
@@ -68,18 +88,21 @@ class _FormsState extends State<Forms> {
                     children: [
                       Expanded(
                         flex: 3,
-                        child: TextFormField(
-                          decoration: InputDecoration(
-                            labelText: 'Birthday',
-                            helperText: 'DD/MM/YYYY'
-                          ),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please insert a valid value';
-                            }
-                            return null;
-                          },
-                        ),
+                        child: Row(children: <Widget>[
+                            Expanded(
+                              child: Text(
+                                _dataSelecionada == null
+                                    ? 'Nenhuma data selecionada'
+                                    : 'Data selecionada: ${DateFormat('dd/MM/y').format(_dataSelecionada)}',
+                              ),
+                            ),
+                            TextButton(
+                                //style: TextButton.styleFrom(primary: Colors.blue),
+                                onPressed: _showDatePicker,
+                                child: Text(
+                                  'Selecionar Data',
+                                ))
+                          ]),
                       ),
                       SizedBox(width: 16), 
                       Expanded(
