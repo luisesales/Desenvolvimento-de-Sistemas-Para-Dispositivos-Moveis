@@ -9,19 +9,29 @@ class IMC extends StatefulWidget {
 
 class _IMCState extends State<IMC> {
   final _weightController = TextEditingController();
-  final _heightController = TextEditingController();
-  String _imcController = "0.0";
+  final _heightController = TextEditingController();  
+  double  _imcController = 0;
+  String _imageURL = '';
+
+  
 
   CalcularIMC(){
     double weight = double.parse(_weightController.text);
     double height = double.parse(_heightController.text);
     setState(() {
-      _imcController = (weight / (height * height)).toString();
+      _imcController = (weight / (height * height));
+      if(_imcController < 18.5){ _imageURL = './assets/underweight.png';}
+      if(_imcController < 25) {_imageURL = './assets/normalweight.png';}
+      if(_imcController < 30) {_imageURL = './assets/overweight.png';}
+      if(_imcController < 35) {_imageURL = './assets/obesity.png';}
+      else {_imageURL = './assets/extremeobesity.png';}
     });    
   }
 
   @override
   Widget build(BuildContext context) {
+    double _imgWidth = MediaQuery.of(context).size.width * 0.8;
+    double _imgHeight = _imgWidth*3;
     
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -99,12 +109,21 @@ class _IMCState extends State<IMC> {
                         onPressed: CalcularIMC,                        
                         child: Text("Calcular", style: TextStyle(fontSize: 16)),
                       ),
-                    ),
-
+                    ),                    
                     Container(
                       margin: EdgeInsets.only(top: 32),
-                      child: Text(_imcController, style: TextStyle(fontSize: 16)),
-                    ),                    
+                      child: Center(
+                        child: SizedBox(
+                          width: _imgWidth,                 
+                          height: _imgHeight,
+                          child: Image.asset(_imageURL),                  
+                        ),  
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(top: 32),
+                      child: Text(_imcController.toString(), style: TextStyle(fontSize: 16)),
+                    ),    
                   ]              
                 ),
               ),
