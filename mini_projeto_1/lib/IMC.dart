@@ -8,6 +8,11 @@ class IMC extends StatefulWidget {
 }
 
 class _IMCState extends State<IMC> {
+
+  CalcularIMC(){
+    
+  }
+
   @override
   Widget build(BuildContext context) {
     

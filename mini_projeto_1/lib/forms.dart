@@ -143,26 +143,27 @@ class _FormsState extends State<Forms> {
                       SizedBox(width: 16), // Adiciona um espaço entre os campos
                       Expanded(
                         flex: 2,
-                        child: Center(
-                          child: DropdownButton<String>(
-                            hint: Text(selectedState ?? "State"),
-                            value: selectedState,
-                            isExpanded: true,
-                            items: ["Rio Grande do Norte","Texas", "Christmas Island"].map((String item) {
-                              return DropdownMenuItem<String>(
-                                value: item,
-                                child: Text(item),
-                              );
-                            }).toList(),
-                            onChanged: (String? newValue) {
-                              setState(() {
-                                selectedCountry = newValue;
-                              });
-                            },
+                        child: Container(
+                            margin: EdgeInsets.only(top: 8),
+                            child: DropdownButtonFormField<String>(
+                              hint: Text(selectedState ?? "State"),
+                              value: selectedState,
+                              isExpanded: true,
+                              items: ["Rio Grande do Norte","Texas", "Christmas Island"].map((String item) {
+                                return DropdownMenuItem<String>(
+                                  value: item,
+                                  child: Text(item),
+                                );
+                              }).toList(),
+                              onChanged: (String? newValue) {
+                                setState(() {
+                                  selectedCountry = newValue;
+                                });
+                              },
+                            ),
                           ),
-                        ),
-                      ),
-                    ],
+                        ),                
+                      ],
                   ),
                   Row(
                     children: [
@@ -181,25 +182,28 @@ class _FormsState extends State<Forms> {
                         ),
                       ),
                       SizedBox(width: 16), // Adiciona um espaço entre os campos
-                      Expanded(
+                      Expanded(                        
                         flex: 2,
-                        child: DropdownButton<String>(
-                          hint: Text(selectedCountry ?? "Country"),
-                          value: selectedCountry,
-                          isExpanded: true,
-                          items: ["Brazil","E.U.A", "Australia"].map((String item) {
-                            return DropdownMenuItem<String>(
-                              value: item,
-                              child: Text(item),
-                            );
-                          }).toList(),
-                          onChanged: (String? newValue) {
-                            setState(() {
-                              selectedCountry = newValue;
+                        child: Container(
+                          margin: EdgeInsets.only(top: 8),
+                          child: DropdownButtonFormField<String>(
+                            hint: Text(selectedCountry ?? "Country"),
+                            value: selectedCountry,
+                            isExpanded: true,
+                            items: ["Brazil","E.U.A", "Australia"].map((String item) {
+                              return DropdownMenuItem<String>(
+                                value: item,
+                                child: Text(item),
+                              );
+                            }).toList(),
+                            onChanged: (String? newValue) {
+                              setState(() {
+                                selectedCountry = newValue;
 
-                            });
-                          },
-                        ),
+                              });
+                            },
+                          ),
+                        )
                       ),
                     ],
                   ),
