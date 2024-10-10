@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl_utils/intl_utils.dart';
 import 'package:intl/intl.dart';
 
 class Forms extends StatefulWidget {
@@ -10,24 +11,27 @@ class Forms extends StatefulWidget {
 
 class _FormsState extends State<Forms> {
 
-  DateTime _dataSelecionada = DateTime.now();
+  DateTime _pickedDateTime = DateTime.now();
+  final _dateFormatter = DateFormat('dd/MM/y');
+  final _birthdayController = TextEditingController();
 
   void _showDatePicker() {
     showDatePicker(
             context: context,
             initialDate: DateTime.now(),
             firstDate: DateTime.now(),
-            lastDate: DateTime(2025))
+            lastDate: DateUtils.addDaysToDate(DateTime.now(), 365))
         .then((pickedDate) {
       //chamada no futuro
       if (pickedDate == null) {
         return;
       }
       setState(() {
-        _dataSelecionada = pickedDate;
+        _pickedDateTime = pickedDate;
+        _birthdayController.text = _pickedDateTime == null ? 'No Selected Date' : _dateFormatter.format(_pickedDateTime);
       });
     });
-  
+  }
   @override
   Widget build(BuildContext context) {
     String? selectedCountry, selectedState;
@@ -88,21 +92,17 @@ class _FormsState extends State<Forms> {
                     children: [
                       Expanded(
                         flex: 3,
-                        child: Row(children: <Widget>[
-                            Expanded(
-                              child: Text(
-                                _dataSelecionada == null
-                                    ? 'Nenhuma data selecionada'
-                                    : 'Data selecionada: ${DateFormat('dd/MM/y').format(_dataSelecionada)}',
-                              ),
-                            ),
-                            TextButton(
-                                //style: TextButton.styleFrom(primary: Colors.blue),
-                                onPressed: _showDatePicker,
-                                child: Text(
-                                  'Selecionar Data',
-                                ))
-                          ]),
+                        child: Expanded(
+                          child: TextFormField(    
+                            controller: _birthdayController,                        
+                            readOnly: true, 
+                            onTap: _showDatePicker,                            
+                            decoration: InputDecoration(
+                              helperText: 'dd/mm/yyyy',
+                              labelText: 'Birthday' ,                            
+                            ), 
+                          ),
+                        ),                                                    
                       ),
                       SizedBox(width: 16), 
                       Expanded(

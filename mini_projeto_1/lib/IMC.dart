@@ -8,9 +8,16 @@ class IMC extends StatefulWidget {
 }
 
 class _IMCState extends State<IMC> {
+  final _weightController = TextEditingController();
+  final _heightController = TextEditingController();
+  String _imcController = "0.0";
 
   CalcularIMC(){
-    
+    double weight = double.parse(_weightController.text);
+    double height = double.parse(_heightController.text);
+    setState(() {
+      _imcController = (weight / (height * height)).toString();
+    });    
   }
 
   @override
@@ -54,9 +61,10 @@ class _IMCState extends State<IMC> {
                         Expanded(
                           flex: 2,
                           child: TextFormField(
+                            controller: _heightController,
                             decoration: InputDecoration(
                               labelText: 'Height',
-                              helperText: 'XXXcm'
+                              helperText: 'X.XXm'
                             ),
                             validator: (value) {
                               if (value == null || value.isEmpty) {
@@ -70,6 +78,7 @@ class _IMCState extends State<IMC> {
                         Expanded(
                           flex: 2,
                           child: TextFormField(
+                            controller: _weightController,
                             decoration: InputDecoration(
                               labelText: 'Weight',
                               helperText: 'XX.Xkg'
@@ -87,10 +96,15 @@ class _IMCState extends State<IMC> {
                     Container(
                       margin: EdgeInsets.only(top: 16),
                       child: ElevatedButton(
-                        onPressed: (){},                        
+                        onPressed: CalcularIMC,                        
                         child: Text("Calcular", style: TextStyle(fontSize: 16)),
                       ),
                     ),
+
+                    Container(
+                      margin: EdgeInsets.only(top: 32),
+                      child: Text(_imcController, style: TextStyle(fontSize: 16)),
+                    ),                    
                   ]              
                 ),
               ),
