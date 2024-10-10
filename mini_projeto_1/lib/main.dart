@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'cubeLayout.dart';
-import 'forms.dart';
-import 'IMC.dart';
+import 'Screens/cubeLayout.dart';
+import 'Screens/forms.dart';
+import 'Screens/IMC.dart';
 
 void main() {
   runApp(const MyApp());

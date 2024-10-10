@@ -54,6 +54,13 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 flutter:
+  assets:
+    - assets/images/underweight.png
+    - assets/images/normalweight.png
+    - assets/images/overweight.png
+    - assets/images/obesity.png
+    - assets/images/extremeobesity.png
+
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

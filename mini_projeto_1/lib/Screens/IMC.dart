@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mini_projeto_1/customCard.dart';
 
 class IMC extends StatefulWidget {
   const IMC({super.key});
@@ -12,6 +13,10 @@ class _IMCState extends State<IMC> {
   final _heightController = TextEditingController();  
   double  _imcController = 0;
   String _imageURL = '';
+  String _category = '';
+  Color _backgroundColor = Colors.black;
+  Color _textColor = Colors.white;
+  bool _isVisible = false;
 
   
 
@@ -19,13 +24,35 @@ class _IMCState extends State<IMC> {
     double weight = double.parse(_weightController.text);
     double height = double.parse(_heightController.text);
     setState(() {
-      _imcController = (weight / (height * height));
-      if(_imcController < 18.5){ _imageURL = './assets/underweight.png';}
-      if(_imcController < 25) {_imageURL = './assets/normalweight.png';}
-      if(_imcController < 30) {_imageURL = './assets/overweight.png';}
-      if(_imcController < 35) {_imageURL = './assets/obesity.png';}
-      else {_imageURL = './assets/extremeobesity.png';}
-    });    
+      _imcController = (weight / (height * height));    
+    });                   
+    _isVisible = true;
+    if(_imcController < 18.5){ 
+      _backgroundColor = const Color.fromARGB(255, 94, 169, 231);
+      _category = 'Underweight';      
+      _imageURL = 'assets/images/underweight.png';
+    }
+    else if(_imcController < 25) {
+      _backgroundColor = const Color.fromARGB(255, 150, 187, 65);
+      _category = 'Normal Weight';      
+      _imageURL = 'assets/images/normalweight.png';
+    }
+    else if(_imcController < 30) {
+      _backgroundColor = const Color.fromARGB(255, 247, 228, 64);
+      _category = 'Overweight';   
+      _imageURL = 'assets/images/overweight.png';
+
+    }
+    else if(_imcController < 35) {
+      _backgroundColor = const Color.fromARGB(255, 255, 145, 0);
+      _category = 'Obesity';   
+      _imageURL = 'assets/images/obesity.png';
+    }
+    else {
+      _backgroundColor = const Color.fromARGB(255, 230, 46, 0);
+      _category = 'Extreme Obesity';   
+      _imageURL = 'assets/images/extremeobesity.png';
+    }
   }
 
   @override
@@ -109,20 +136,25 @@ class _IMCState extends State<IMC> {
                         onPressed: CalcularIMC,                        
                         child: Text("Calcular", style: TextStyle(fontSize: 16)),
                       ),
-                    ),                    
-                    Container(
-                      margin: EdgeInsets.only(top: 32),
-                      child: Center(
-                        child: SizedBox(
-                          width: _imgWidth,                 
-                          height: _imgHeight,
-                          child: Image.asset(_imageURL),                  
-                        ),  
-                      ),
                     ),
-                    Container(
-                      margin: EdgeInsets.only(top: 32),
-                      child: Text(_imcController.toString(), style: TextStyle(fontSize: 16)),
+                    Visibility(
+                    visible: _isVisible,                    
+                      child : Column( 
+                        children: [
+                          Container(
+                            child: Center(
+                              child: SizedBox(
+                                width: _imgWidth,                 
+                                height: _imgHeight,
+                                child: Image.asset(_imageURL),                  
+                              ),  
+                            ),
+                          ),
+                          Container(                      
+                            child: CustomCard(backgroundColor: _backgroundColor, textColor: _textColor, category: _category, imcValue: _imcController),
+                          )
+                        ]
+                      )
                     ),    
                   ]              
                 ),
