@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mini_projeto_1/Screens/IMC.dart';
+import 'package:mini_projeto_1/Screens/forms.dart';
 
 class CubeLayout extends StatelessWidget {
   const CubeLayout({super.key});
@@ -11,10 +13,19 @@ class CubeLayout extends StatelessWidget {
         title: Container(
           child: Row(
             children: [
-              IconButton(onPressed: () {}, icon: Icon(Icons.arrow_back)),
+              IconButton(onPressed: () {
+                Navigator.pop(context);
+                Navigator.push(context, MaterialPageRoute(builder: (context) => IMC()));
+              }, icon: Icon(Icons.arrow_back)),
+              Spacer(),
               Text("Cube Layout"),
               Spacer(),
-              IconButton(onPressed: () {}, icon: Icon(Icons.more_vert)),
+              IconButton(onPressed: () {
+                Navigator.pop(context);
+                Navigator.push(context, MaterialPageRoute(builder: (context) => Forms()),
+            );
+
+              }, icon: Icon(Icons.arrow_forward)),
             ],
           ),
           //margin: EdgeInsets.all(4),

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mini_projeto_1/Screens/cubeLayout.dart';
+import 'package:mini_projeto_1/Screens/forms.dart';
 import 'package:mini_projeto_1/customCard.dart';
 
 class IMC extends StatefulWidget {
@@ -66,11 +68,19 @@ class _IMCState extends State<IMC> {
         title: Container(
           child: Row(
             children: [
-              IconButton(onPressed: () {}, icon: Icon(Icons.arrow_back)),
+              IconButton(onPressed: () {
+                Navigator.pop(context);
+                Navigator.push(context, MaterialPageRoute(builder: (context) => Forms()));
+              }, icon: Icon(Icons.arrow_back)),
               Spacer(),
               Text("IMC Calculator"),
               Spacer(),
-              IconButton(onPressed: () {}, icon: Icon(Icons.arrow_forward)),
+              IconButton(onPressed: () {
+                Navigator.pop(context);
+                Navigator.push(context, MaterialPageRoute(builder: (context) => CubeLayout()),
+            );
+
+              }, icon: Icon(Icons.arrow_forward)),
             ],
           ),
           //margin: EdgeInsets.all(4),

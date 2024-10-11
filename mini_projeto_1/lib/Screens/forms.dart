@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl_utils/intl_utils.dart';
 import 'package:intl/intl.dart';
+import 'package:mini_projeto_1/Screens/cubeLayout.dart';
+import 'package:mini_projeto_1/Screens/IMC.dart';
 
 class Forms extends StatefulWidget {
   const Forms({super.key});
@@ -41,10 +43,16 @@ class _FormsState extends State<Forms> {
         title: Container(
           child: Row(
             children: [
-              IconButton(onPressed: () {}, icon: Icon(Icons.arrow_back)),
+              IconButton(onPressed: () {
+                Navigator.pop(context);
+                Navigator.push(context, MaterialPageRoute(builder: (context) => CubeLayout()));
+              }, icon: Icon(Icons.arrow_back)),
               Text("Application"),
               Spacer(),
-              IconButton(onPressed: () {}, icon: Icon(Icons.more_vert)),
+              IconButton(onPressed: () {
+                Navigator.pop(context);
+                Navigator.push(context, MaterialPageRoute(builder: (context) => IMC()));
+              }, icon: Icon(Icons.more_vert)),
             ],
           ),
           //margin: EdgeInsets.all(4),
