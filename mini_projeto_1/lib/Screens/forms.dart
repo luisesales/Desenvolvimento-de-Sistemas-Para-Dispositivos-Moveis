@@ -52,7 +52,7 @@ class _FormsState extends State<Forms> {
               IconButton(onPressed: () {
                 Navigator.pop(context);
                 Navigator.push(context, MaterialPageRoute(builder: (context) => IMC()));
-              }, icon: Icon(Icons.more_vert)),
+              }, icon: Icon(Icons.arrow_forward)),
             ],
           ),
           //margin: EdgeInsets.all(4),

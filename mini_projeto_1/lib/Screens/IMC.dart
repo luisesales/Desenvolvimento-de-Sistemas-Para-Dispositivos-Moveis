@@ -111,7 +111,7 @@ class _IMCState extends State<IMC> {
                             controller: _heightController,
                             decoration: InputDecoration(
                               labelText: 'Height',
-                              helperText: 'X.XXm'
+                              helperText: 'X.XX'
                             ),
                             validator: (value) {
                               if (value == null || value.isEmpty) {
@@ -128,7 +128,7 @@ class _IMCState extends State<IMC> {
                             controller: _weightController,
                             decoration: InputDecoration(
                               labelText: 'Weight',
-                              helperText: 'XX.Xkg'
+                              helperText: 'XX.X'
                             ),
                             validator: (value) {
                               if (value == null || value.isEmpty) {
@@ -144,7 +144,7 @@ class _IMCState extends State<IMC> {
                       margin: EdgeInsets.only(top: 16),
                       child: ElevatedButton(
                         onPressed: CalcularIMC,                        
-                        child: Text("Calcular", style: TextStyle(fontSize: 16)),
+                        child: Text("Calculate", style: TextStyle(fontSize: 16)),
                       ),
                     ),
                     Visibility(
