@@ -45,7 +45,7 @@ class _IMCState extends State<IMC> {
       _imageURL = 'assets/images/overweight.png';
 
     }
-    else if(_imcController < 35) {
+    else if(_imcController < 40) {
       _backgroundColor = const Color.fromARGB(255, 255, 145, 0);
       _category = 'Obesity';   
       _imageURL = 'assets/images/obesity.png';
