@@ -29,6 +29,17 @@ class MeuDrawer extends StatelessWidget {
             },
           ),
           ListTile(
+            leading: Icon(Icons.add_location),
+            title: const Text('Lugares'),
+            onTap: () {
+              //context.pushReplacement('/configuracoes');
+              Navigator.of(context).pushReplacementNamed(
+                '/adicionarLugar',
+              );
+            },
+          ),
+
+          ListTile(
             leading: Icon(Icons.engineering),
             title: const Text('Configurações'),
             onTap: () {

@@ -104,7 +104,7 @@ class _MinhasAbasBottomState extends State<MinhasAbasBottom> {
                   child: TabBarView(
                     children: [
                       PaisScreen(),
-                      FavoritosScreen(lugaresFavoritos: widget.lugaresFavoritos,),
+                      FavoritosScreen(),
                     ],
                   ),
                 ),

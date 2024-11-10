@@ -1,18 +1,15 @@
+import 'package:mini_projeto_3/model/PaisesModel.dart';
 import 'package:mini_projeto_3/model/lugar.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class DetalhesLugarScreen extends StatelessWidget {
-  const DetalhesLugarScreen({super.key, required this.onToggle});
-
-  final void Function(Lugar) onToggle;
+  const DetalhesLugarScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
 
-    final lugar = ModalRoute.of(context)?.settings.arguments as Lugar;
-    void _favoritarLugar() {
-      onToggle(lugar);
-    }
+    final lugar = ModalRoute.of(context)?.settings.arguments as Lugar;    
 
     return Scaffold(
       appBar: AppBar(
@@ -73,7 +70,7 @@ class DetalhesLugarScreen extends StatelessWidget {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _favoritarLugar,
+        onPressed: (){context.read<PaisesModel>().favorite(lugar);},
         child: Icon(Icons.star_border),
       ),
     );
