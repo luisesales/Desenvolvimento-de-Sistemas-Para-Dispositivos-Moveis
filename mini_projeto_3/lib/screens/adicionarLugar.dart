@@ -1,6 +1,7 @@
 import 'package:mini_projeto_3/components/drawer.dart';
 import 'package:mini_projeto_3/components/double_number_picker.dart';
 import 'package:mini_projeto_3/components/image_picker.dart';
+import 'package:mini_projeto_3/components/dynamic_text_input.dart';
 import 'package:numberpicker/numberpicker.dart'; 
 import 'package:flutter/material.dart';
 
@@ -80,12 +81,14 @@ class _AdicionarLugarState extends State<AdicionarLugar> {
                           ),                                                    
                         ), 
                         Container(
-                          margin: EdgeInsets.only(top: 16),
+                          margin: EdgeInsets.only(top: 16, bottom: 16),
                           child: imagePicker()   
                         ),                           
+                        //DynamicTextInput(),
                       ],
                     ),
                   ),
+                  
                 ],
               ),
             ),
