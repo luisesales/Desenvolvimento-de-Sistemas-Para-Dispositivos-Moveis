@@ -1,8 +1,10 @@
+import 'package:mini_projeto_3/model/PaisesModel.dart';
 import 'package:mini_projeto_3/components/item_lugar.dart';
 import 'package:mini_projeto_3/data/dados.dart';
 import 'package:mini_projeto_3/model/lugar.dart';
 import 'package:mini_projeto_3/model/pais.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class LugarPorPaisScreen extends StatelessWidget {
   
@@ -14,9 +16,7 @@ class LugarPorPaisScreen extends StatelessWidget {
     final pais = ModalRoute.of(context)?.settings.arguments as Pais;
     
     //prepara a lista de lugares por pais
-    final List<Lugar> lugaresPorPais = lugares.where((lugar) {
-      return lugar.paises.contains(pais.id);
-    }).toList();
+    final List<Lugar> lugaresPorPais = Provider.of<PaisesModel>(context).getLugares(pais.id);
 
     return Scaffold(
       appBar: AppBar(

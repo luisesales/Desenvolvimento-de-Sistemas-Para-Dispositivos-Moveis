@@ -1,4 +1,3 @@
-import 'package:mini_projeto_3/model/lugar.dart';
 import 'package:mini_projeto_3/model/PaisesModel.dart';
 import 'package:mini_projeto_3/screens/abas.dart';
 import 'package:mini_projeto_3/screens/configuracoes.dart';
@@ -21,15 +20,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  final List<Lugar> _lugaresFavoritos = [];
-
-  void toggleLugarFavorito(Lugar place) {
-    setState(() {
-      _lugaresFavoritos.contains(place)
-          ? _lugaresFavoritos.remove(place)
-          : _lugaresFavoritos.add(place);
-    });
-  }
 
 
   @override
@@ -40,7 +30,7 @@ class _MyAppState extends State<MyApp> {
       child: MaterialApp(
         initialRoute: '/',
         routes: {
-          '/': (ctx) => MinhasAbas(listaFavoritos: _lugaresFavoritos,),
+          '/': (ctx) => MinhasAbas(),
           '/lugaresPorPais': (ctx) => LugarPorPaisScreen(),
           '/detalheLugar': (ctx) => DetalhesLugarScreen(),
           '/configuracoes': (ctx) => ConfigracoesScreen(),

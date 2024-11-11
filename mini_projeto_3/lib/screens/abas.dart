@@ -4,9 +4,8 @@ import 'package:mini_projeto_3/screens/favoritos.dart';
 import 'package:mini_projeto_3/screens/pais_screen.dart';
 import 'package:flutter/material.dart';
 
-class MinhasAbas extends StatefulWidget {
-  final List<Lugar> listaFavoritos;
-  const MinhasAbas({super.key, required this.listaFavoritos});
+class MinhasAbas extends StatefulWidget {  
+  const MinhasAbas({super.key});
 
   @override
   State<MinhasAbas> createState() => _MinhasAbasState();
@@ -18,7 +17,7 @@ class _MinhasAbasState extends State<MinhasAbas> {
 
   @override
   Widget build(BuildContext context) {
-    return MinhasAbasBottom(lugaresFavoritos: widget.listaFavoritos);
+    return MinhasAbasBottom();
   }
 }
 
@@ -67,9 +66,8 @@ class _MinhasAbasState extends State<MinhasAbas> {
   }
 } */
 
-class MinhasAbasBottom extends StatefulWidget {
-  final List<Lugar> lugaresFavoritos;
-  MinhasAbasBottom({super.key, required this.lugaresFavoritos});
+class MinhasAbasBottom extends StatefulWidget {  
+  MinhasAbasBottom({super.key});
 
   @override
   State<MinhasAbasBottom> createState() => _MinhasAbasBottomState();
