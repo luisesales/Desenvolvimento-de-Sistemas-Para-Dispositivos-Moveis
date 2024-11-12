@@ -1,14 +1,10 @@
 import 'package:mini_projeto_3/components/item_pais.dart';
-import 'package:mini_projeto_3/data/dados.dart';
+import 'package:mini_projeto_3/model/PaisesModel.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class PaisScreen extends StatelessWidget {
   const PaisScreen({super.key});
-
-
-  List<Widget> getPaises() {
-    return paises.map((pais) => ItemPais(pais: pais)).toList();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,16 +16,21 @@ class PaisScreen extends StatelessWidget {
           style: TextStyle(color: Colors.white),
         ),
       ), */
-      body: GridView(
-        padding: EdgeInsets.all(16),
-        gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-          maxCrossAxisExtent: 200,
-          mainAxisExtent: 120,
-          childAspectRatio: 3 / 2,
-          crossAxisSpacing: 20,
-          
-        ),
-        children: getPaises(),
+      body: Consumer<PaisesModel>(
+        
+        builder: (context, paisesModel, child) {
+          return GridView(
+          padding: EdgeInsets.all(16),
+            gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+              maxCrossAxisExtent: 200,
+              mainAxisExtent: 120,
+              childAspectRatio: 3 / 2,
+              crossAxisSpacing: 20,
+              
+            ),
+            children: paisesModel.paises.map((pais) => ItemPais(pais: pais)).toList(),
+          );
+        }
       ),
     );
   }

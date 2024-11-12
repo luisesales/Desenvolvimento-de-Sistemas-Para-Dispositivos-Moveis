@@ -2,6 +2,7 @@ import 'package:mini_projeto_3/components/drawer.dart';
 import 'package:mini_projeto_3/components/double_number_picker.dart';
 import 'package:mini_projeto_3/components/image_picker.dart';
 import 'package:mini_projeto_3/components/dynamic_text_input.dart';
+import 'package:mini_projeto_3/model/lugar.dart';
 import 'package:numberpicker/numberpicker.dart'; 
 import 'package:flutter/material.dart';
 
@@ -14,11 +15,11 @@ class AdicionarLugar extends StatefulWidget {
 
 class _AdicionarLugarState extends State<AdicionarLugar> {
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) {    
     final _titleController = TextEditingController();
-    String url;
-    double avaliation = 0.0;
-    double cost = 0.0;
+    String? _imageURL; 
+    double _avaliation = 0.0; 
+    double _cost = 0.0;
     List<TextEditingController> _recomendations = [];
     List<TextEditingController> _countries = [];
     bool _wrongTitle = false;
@@ -27,6 +28,23 @@ class _AdicionarLugarState extends State<AdicionarLugar> {
     bool _wrongRecomendation = false;  
     bool _wrongAvaliation = false;  
     bool _wrongCost = false;  
+
+    void _updateImage(String url) { 
+      setState(() { 
+        _imageURL = url; 
+      }); 
+    } 
+    void _updateAvaliation(double value) { 
+      setState(() { 
+        _avaliation = value; 
+      }); 
+    } 
+    void _updateCost(double value) { 
+      setState(() { 
+        _cost = value; 
+      });
+    } 
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -71,18 +89,34 @@ class _AdicionarLugarState extends State<AdicionarLugar> {
                         Expanded(
                           flex: 2,
                           child: Expanded(
-                            child: DoubleNumberPicker(step: 0.1, precision: 1,maxValue: 5,minValue: 0,labelText: '', labelIcon: Icons.star,)
+                            child: DoubleNumberPicker(
+                              step: 0.1, 
+                              precision: 1,
+                              maxValue: 5,
+                              minValue: 0,
+                              labelText: '', 
+                              labelIcon: Icons.star,
+                              onChanged: _updateAvaliation,
+                              )
                           ),                                                    
                         ),
                         Expanded(
                           flex: 2,
                           child: Expanded(
-                            child: DoubleNumberPicker(step: 5, precision: 2,maxValue: 100,minValue: 0,labelText: 'Custo :', labelIcon: Icons.attach_money,)
+                            child: DoubleNumberPicker(
+                              step: 5, 
+                              precision: 2,
+                              maxValue: double.infinity,
+                              minValue: 0,
+                              labelText: 'Custo :',
+                              labelIcon: Icons.attach_money,
+                              onChanged: _updateCost
+                              )
                           ),                                                    
                         ), 
                         Container(
                           margin: EdgeInsets.only(top: 16, bottom: 16),
-                          child: imagePicker()   
+                          child: imagePicker(onImagePicked: _updateImage,)   
                         ),                           
                         //DynamicTextInput(),
                       ],

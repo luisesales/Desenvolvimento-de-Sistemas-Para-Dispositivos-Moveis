@@ -9,6 +9,7 @@ class DoubleNumberPicker extends StatefulWidget {
     required this.minValue,
     required this.labelText,    
     required this.labelIcon,
+    required this.onChanged,
   });
 
   
@@ -18,6 +19,7 @@ class DoubleNumberPicker extends StatefulWidget {
   final double minValue;
   final String labelText;  
   final IconData labelIcon;
+  final Function(double) onChanged;
 
   @override 
   _DoubleNumberPickerState createState() => _DoubleNumberPickerState(); 
@@ -27,11 +29,13 @@ class _DoubleNumberPickerState extends State<DoubleNumberPicker> {
  _increaseValue() { 
     setState(() {       
       _currentValue = (_currentValue + widget.step).clamp(widget.minValue, widget.maxValue); 
+      widget.onChanged(_currentValue);
     }); 
   } 
   void _decreaseValue() { 
     setState(() {       
       _currentValue = (_currentValue - widget.step).clamp(widget.minValue, widget.maxValue); 
+      widget.onChanged(_currentValue);
     }); 
   } 
   @override

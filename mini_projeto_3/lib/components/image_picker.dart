@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
-class imagePicker extends StatefulWidget {
+class imagePicker extends StatefulWidget {  
+  final Function(String) onImagePicked; 
+  
+  imagePicker({required this.onImagePicked});
+
   @override
   _imagePickerState createState() => _imagePickerState();
 }
@@ -17,6 +21,7 @@ class _imagePickerState extends State<imagePicker> {
     setState(() {
       if (pickedFile != null) {
         _image = File(pickedFile.path);
+        widget.onImagePicked(pickedFile.path);
       } else {
         print('Nenhuma imagem selecionada.');
       }
@@ -26,6 +31,7 @@ class _imagePickerState extends State<imagePicker> {
   void _removeImage() { 
       setState(() { 
         _image = null; 
+        widget.onImagePicked("");
       }); 
     }
 
