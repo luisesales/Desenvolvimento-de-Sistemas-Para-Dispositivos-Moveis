@@ -7,7 +7,6 @@ import 'package:mini_projeto_3/screens/adicionarLugar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-
 void main() {
   runApp(MyApp());
 }
@@ -20,13 +19,19 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  late PaisesModel model;
 
+  @override
+  void initState() {
+    super.initState();
+    model = PaisesModel();
+    model.initialize(); // Certifique-se de que a função initialize() é chamada apenas uma vez aqui
+  }
 
   @override
   Widget build(BuildContext context) {
-
     return ChangeNotifierProvider(
-      create: (context) => PaisesModel(),
+      create: (context) => model,
       child: MaterialApp(
         initialRoute: '/',
         routes: {
@@ -36,11 +41,7 @@ class _MyAppState extends State<MyApp> {
           '/configuracoes': (ctx) => ConfigracoesScreen(),
           '/adicionarLugar': (ctx) => AdicionarLugar(),
         },
-      )
-    )    ;
-
-    /* return MaterialApp.router(
-      routerConfig: minhasRotas.getRouter(),
-    ); */
+      ),
+    );
   }
 }

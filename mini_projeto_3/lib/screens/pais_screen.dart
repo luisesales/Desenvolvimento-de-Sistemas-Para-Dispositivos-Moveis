@@ -28,7 +28,7 @@ class PaisScreen extends StatelessWidget {
               crossAxisSpacing: 20,
               
             ),
-            children: paisesModel.paises.map((pais) => ItemPais(pais: pais)).toList(),
+            children: paisesModel.todos_paises.map((pais) => ItemPais(pais: pais)).toList(),
           );
         }
       ),

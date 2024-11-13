@@ -9,11 +9,12 @@ class PaisesModel with ChangeNotifier {
   List<Pais> _paises = [];
 
   List<Lugar>  get favoritos => _lugaresFavoritos;
-  List<Pais> get paises => _paises;    
+  List<Pais> get todos_paises => _paises;    
 
   void initialize(){
-    _paises.addAll(paises);
-    _lugaresFavoritos = [];
+    for(Pais p in paises){
+      _paises.add(p);
+    }    
     notifyListeners();
   }
 

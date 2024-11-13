@@ -29,21 +29,21 @@ class _AdicionarLugarState extends State<AdicionarLugar> {
     bool _wrongAvaliation = false;  
     bool _wrongCost = false;  
 
-    void _updateImage(String url) { 
-      setState(() { 
-        _imageURL = url; 
-      }); 
-    } 
-    void _updateAvaliation(double value) { 
-      setState(() { 
-        _avaliation = value; 
-      }); 
-    } 
-    void _updateCost(double value) { 
-      setState(() { 
-        _cost = value; 
+    void _updateValue(dynamic newValue, dynamic variable){
+      setState(() {
+        variable = newValue;
       });
-    } 
+    }
+
+    void _updateList(dynamic newList, dynamic list_variable){
+      setState(() {
+        list_variable.clear();
+        for(dynamic o in newList){
+          list_variable.add(o);
+        }
+      });
+    }
+
 
     return Scaffold(
       appBar: AppBar(
@@ -96,7 +96,7 @@ class _AdicionarLugarState extends State<AdicionarLugar> {
                               minValue: 0,
                               labelText: '', 
                               labelIcon: Icons.star,
-                              onChanged: _updateAvaliation,
+                              onChanged: (double){_updateValue(double,_avaliation);}
                               )
                           ),                                                    
                         ),
@@ -110,15 +110,20 @@ class _AdicionarLugarState extends State<AdicionarLugar> {
                               minValue: 0,
                               labelText: 'Custo :',
                               labelIcon: Icons.attach_money,
-                              onChanged: _updateCost
+                              onChanged: (double){_updateValue(double,_cost);}
                               )
                           ),                                                    
                         ), 
                         Container(
                           margin: EdgeInsets.only(top: 16, bottom: 16),
-                          child: imagePicker(onImagePicked: _updateImage,)   
+                          child: imagePicker(onImagePicked: (String){_updateValue(String,_imageURL);},)   
                         ),                           
-                        //DynamicTextInput(),
+                        DynamicTextInput(
+                          label : "Recomendação",
+                          onChanged: (dynamic){
+                            _updateList(dynamic, _recomendations);
+                          },
+                        ),
                       ],
                     ),
                   ),
