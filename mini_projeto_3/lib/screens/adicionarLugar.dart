@@ -35,10 +35,14 @@ class _AdicionarLugarState extends State<AdicionarLugar> {
       });
     }
 
-    void _updateList(dynamic newList, dynamic list_variable){
-      setState(() {
+    void _updateRecomendations(List list, List<TextEditingController> list_variable){
+      setState(() {        
         list_variable.clear();
-        for(dynamic o in newList){
+        for(dynamic o in list_variable){
+                 
+          list_variable.remove(o);
+        }        
+        for(dynamic o in list){
           list_variable.add(o);
         }
       });
@@ -120,9 +124,8 @@ class _AdicionarLugarState extends State<AdicionarLugar> {
                         ),                           
                         DynamicTextInput(
                           label : "Recomendação",
-                          onChanged: (dynamic){
-                            _updateList(dynamic, _recomendations);
-                          },
+                          
+                          controllers: _recomendations,
                         ),
                       ],
                     ),

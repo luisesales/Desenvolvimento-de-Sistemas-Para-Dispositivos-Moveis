@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
 class DynamicTextInput extends StatefulWidget {
-
-  final Function(List<TextEditingController>) onChanged; 
+  
   final String label;
+  List<TextEditingController> controllers;
   
   DynamicTextInput({
-    required this.label,
-    required this.onChanged,
+    required this.label,    
+    required this.controllers,
   });
 
 
@@ -16,7 +16,7 @@ class DynamicTextInput extends StatefulWidget {
 }
 
 class _DynamicTextInputState extends State<DynamicTextInput> {
-  List<TextEditingController> _controllers = [];
+  
 
   @override
   void initState() {
@@ -26,22 +26,21 @@ class _DynamicTextInputState extends State<DynamicTextInput> {
 
   void _addTextField() {
     setState(() {
-      _controllers.add(TextEditingController());
-      widget.onChanged(_controllers);
+      widget.controllers.add(TextEditingController());      
     });
   }
 
   void _removeTextField(int index){
     setState(() {
-      _controllers.remove(_controllers[index]);
-      widget.onChanged(_controllers);
+      widget.controllers[index].dispose();
+      widget.controllers.remove(widget.controllers[index]);      
     });
   }
 
   @override
   void dispose() {
     // Dispose de todos os controladores para liberar recursos
-    for (var controller in _controllers) {
+    for (var controller in widget.controllers) {
       controller.dispose();
     }
     super.dispose();
@@ -55,7 +54,7 @@ class _DynamicTextInputState extends State<DynamicTextInput> {
           children: <Widget>[
             Flexible(
               child: ListView.builder(
-                itemCount: _controllers.length,
+                itemCount: widget.controllers.length,
                 itemBuilder: (context, index) {
                   return Flex(
                     direction: Axis.vertical,
@@ -67,7 +66,7 @@ class _DynamicTextInputState extends State<DynamicTextInput> {
                             Expanded(
                               flex: 4,
                               child: TextFormField(
-                                controller: _controllers[index],
+                                controller: widget.controllers[index],
                                 decoration: InputDecoration(                        
                                   labelText: '${widget.label}: ${index + 1}',
                                 ),
