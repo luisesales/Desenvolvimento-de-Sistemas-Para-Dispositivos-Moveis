@@ -4,6 +4,7 @@ import 'package:mini_projeto_3/components/image_picker.dart';
 import 'package:mini_projeto_3/components/dynamic_text_input.dart';
 import 'package:mini_projeto_3/components/dynamic_dropdown_list.dart';
 import 'package:mini_projeto_3/model/lugar.dart';
+import 'package:mini_projeto_3/model/pais.dart';
 import 'package:numberpicker/numberpicker.dart'; 
 import 'package:flutter/material.dart';
 
@@ -124,10 +125,12 @@ class _AdicionarLugarState extends State<AdicionarLugar> {
                           child: imagePicker(onImagePicked: (String){_updateValue(String,_imageURL);},)   
                         ),                           
                         DynamicTextInput(
+                          title: "Recomendações",
                           label : "Recomendação",                          
                           controllers: _recomendations,
                         ),
                         DynamicDropdownList(
+                          title: "Países",
                           label: "País",
                           selectedCountries: _countries
                         ),

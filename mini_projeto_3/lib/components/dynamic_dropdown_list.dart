@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:mini_projeto_3/model/PaisesModel.dart';
+import 'package:mini_projeto_3/model/pais.dart';
 import 'package:provider/provider.dart';
+import 'package:mini_projeto_3/model/PaisesModel.dart';
 
 class DynamicDropdownList extends StatefulWidget {
-  
-  String label;
+  final String title;
+  final String label;
   List<String?> selectedCountries;
     
   DynamicDropdownList({
+    required this.title,
     required this.label,
     required this.selectedCountries,        
   });
@@ -17,13 +20,13 @@ class DynamicDropdownList extends StatefulWidget {
   _DynamicDropdownListState createState() => _DynamicDropdownListState();
 }
 
-class _DynamicDropdownListState extends State<DynamicDropdownList> {
-  
+class _DynamicDropdownListState extends State<DynamicDropdownList> {  
 
   @override
   void initState() {
-    super.initState();
+    super.initState();    
     _addField(); // Adiciona um campo de texto inicial      
+
   }
 
   void _addField() {
@@ -40,10 +43,16 @@ class _DynamicDropdownListState extends State<DynamicDropdownList> {
 
   @override
   Widget build(BuildContext context) {
+    List<String> availableCountries = context.read<PaisesModel>().todos_paises.map((pais) => pais.titulo).toList();    
     return Container(  
       height: 200,      
+      margin: EdgeInsets.only(top: 36),
         child: Column(
           children: <Widget>[
+            Text(
+              '${widget.title}',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
             Flexible(
               child: ListView.builder(
                 itemCount: widget.selectedCountries.length,
@@ -54,21 +63,25 @@ class _DynamicDropdownListState extends State<DynamicDropdownList> {
                       Padding(
                         padding: const EdgeInsets.only(top: 8.0),
                         child: Row(
-                          children: [
+                          children: [                            
                             Expanded(
                               flex: 5,
                               child: DropdownButtonFormField<String>(
                                 hint: Text(widget.selectedCountries[index] ?? "País ${index+1}"),
-                                value: widget.selectedCountries[index],
+                                value: availableCountries.first,
                                 isExpanded: true,
-                                items: context.read<PaisesModel>().todos_paises .map(
-                                  (pais) => DropdownMenuItem<String>( 
-                                    value: pais.titulo, child: Text(pais.titulo), 
-                                  ),
-                                ).toList(),
+                                items: availableCountries.map((title){ 
+                                  return DropdownMenuItem<String>( 
+                                    value: title, child: Text(title), 
+                                  );
+                                  }).toList(),
                                 onChanged: (String? newValue) {
                                   setState(() {
+                                    if(!availableCountries.contains(widget.selectedCountries[index])){
+                                      availableCountries.add(widget.selectedCountries[index]!);
+                                    }
                                     widget.selectedCountries[index] = newValue;
+                                    availableCountries.remove(newValue);
                                   });
                                 },
                               ),
@@ -80,8 +93,9 @@ class _DynamicDropdownListState extends State<DynamicDropdownList> {
                                 icon: const Icon(Icons.close),
                               ),
                             ),
-                        ],)
-                      ),
+                        ],
+                      ),                    
+                      ),                    
                     ],
                   );
                 },

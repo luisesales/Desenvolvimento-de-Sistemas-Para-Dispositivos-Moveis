@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 
 class DynamicTextInput extends StatefulWidget {
-  
+  final String title;
   final String label;
   List<TextEditingController> controllers;
   
   DynamicTextInput({
+    required this.title,
     required this.label,    
     required this.controllers,
   });
@@ -49,10 +50,14 @@ class _DynamicTextInputState extends State<DynamicTextInput> {
   @override
   Widget build(BuildContext context) {
     return Container(  
-      margin: EdgeInsets.only(top: 8),
+      margin: EdgeInsets.only(top: 36),
       height: 200,      
         child: Column(
           children: <Widget>[
+            Text(
+              '${widget.title}',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
             Flexible(
               child: ListView.builder(
                 itemCount: widget.controllers.length,
