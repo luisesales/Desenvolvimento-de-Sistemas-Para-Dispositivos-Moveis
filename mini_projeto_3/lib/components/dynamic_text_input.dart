@@ -49,6 +49,7 @@ class _DynamicTextInputState extends State<DynamicTextInput> {
   @override
   Widget build(BuildContext context) {
     return Container(  
+      margin: EdgeInsets.only(top: 8),
       height: 200,      
         child: Column(
           children: <Widget>[
@@ -64,7 +65,7 @@ class _DynamicTextInputState extends State<DynamicTextInput> {
                         child: Row(
                           children: [
                             Expanded(
-                              flex: 4,
+                              flex: 5,
                               child: TextFormField(
                                 controller: widget.controllers[index],
                                 decoration: InputDecoration(                        
