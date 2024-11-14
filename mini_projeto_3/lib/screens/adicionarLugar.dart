@@ -5,8 +5,9 @@ import 'package:mini_projeto_3/components/dynamic_text_input.dart';
 import 'package:mini_projeto_3/components/dynamic_dropdown_list.dart';
 import 'package:mini_projeto_3/model/lugar.dart';
 import 'package:mini_projeto_3/model/pais.dart';
-import 'package:numberpicker/numberpicker.dart'; 
+import 'package:mini_projeto_3/model/PaisesModel.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class AdicionarLugar extends StatefulWidget {
   const AdicionarLugar({super.key});
@@ -36,20 +37,6 @@ class _AdicionarLugarState extends State<AdicionarLugar> {
         variable = newValue;
       });
     }
-
-    void _updateRecomendations(List list, List<TextEditingController> list_variable){
-      setState(() {        
-        list_variable.clear();
-        for(dynamic o in list_variable){
-                 
-          list_variable.remove(o);
-        }        
-        for(dynamic o in list){
-          list_variable.add(o);
-        }
-      });
-    }
-
 
     return Scaffold(
       appBar: AppBar(
@@ -132,7 +119,8 @@ class _AdicionarLugarState extends State<AdicionarLugar> {
                         DynamicDropdownList(
                           title: "Países",
                           label: "País",
-                          selectedCountries: _countries
+                          selectedList: _countries,
+                          list: context.watch<PaisesModel>().todos_paises.map((pais) => pais.titulo).toList(),    
                         ),
                       ],
                     ),

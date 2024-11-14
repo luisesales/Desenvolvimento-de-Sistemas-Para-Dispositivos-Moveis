@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:mini_projeto_3/model/PaisesModel.dart';
-import 'package:mini_projeto_3/model/pais.dart';
-import 'package:provider/provider.dart';
-import 'package:mini_projeto_3/model/PaisesModel.dart';
 
 class DynamicDropdownList extends StatefulWidget {
   final String title;
   final String label;
-  List<String?> selectedCountries;
+  List<String?> selectedList;
+  final List<String?> list;
     
   DynamicDropdownList({
     required this.title,
     required this.label,
-    required this.selectedCountries,        
+    required this.selectedList,      
+    required this.list,  
   });
 
 
@@ -31,19 +29,19 @@ class _DynamicDropdownListState extends State<DynamicDropdownList> {
 
   void _addField() {
     setState(() {
-      widget.selectedCountries.add("");      
+      if(widget.selectedList.length < widget.list.length)
+        widget.selectedList.add(widget.list.first);      
     });
   }
 
   void _removeField(int index){
     setState(() {            
-      widget.selectedCountries.remove(widget.selectedCountries[index]);      
+      widget.selectedList.remove(widget.selectedList.elementAt(index));      
     });
   }
 
   @override
-  Widget build(BuildContext context) {
-    List<String> availableCountries = context.read<PaisesModel>().todos_paises.map((pais) => pais.titulo).toList();    
+  Widget build(BuildContext context) {    
     return Container(  
       height: 200,      
       margin: EdgeInsets.only(top: 36),
@@ -55,7 +53,7 @@ class _DynamicDropdownListState extends State<DynamicDropdownList> {
               ),
             Flexible(
               child: ListView.builder(
-                itemCount: widget.selectedCountries.length,
+                itemCount: widget.selectedList.length,
                 itemBuilder: (context, index) {
                   return Flex(
                     direction: Axis.vertical,
@@ -67,21 +65,17 @@ class _DynamicDropdownListState extends State<DynamicDropdownList> {
                             Expanded(
                               flex: 5,
                               child: DropdownButtonFormField<String>(
-                                hint: Text(widget.selectedCountries[index] ?? "País ${index+1}"),
-                                value: availableCountries.first,
+                                hint: Text(widget.selectedList[index] ?? "País ${index+1}"),
+                                value: widget.selectedList[index],
                                 isExpanded: true,
-                                items: availableCountries.map((title){ 
+                                items: widget.list.map((title){ 
                                   return DropdownMenuItem<String>( 
-                                    value: title, child: Text(title), 
+                                    value: title, child: Text(title!), 
                                   );
                                   }).toList(),
                                 onChanged: (String? newValue) {
-                                  setState(() {
-                                    if(!availableCountries.contains(widget.selectedCountries[index])){
-                                      availableCountries.add(widget.selectedCountries[index]!);
-                                    }
-                                    widget.selectedCountries[index] = newValue;
-                                    availableCountries.remove(newValue);
+                                  setState(() {                                    
+                                    widget.selectedList[index] = newValue;                                    
                                   });
                                 },
                               ),
