@@ -49,8 +49,7 @@ class ModalBottomSheet extends StatelessWidget {
                   child: Text('${confirmAction}'), 
                   style:  ButtonStyle(backgroundColor: WidgetStatePropertyAll(color)),
                   onPressed: () {if(true){
-                    onConditionMet();
-                    Navigator.of(context).pop();
+                    onConditionMet();                    
                     }}, 
                 ), 
               ], 

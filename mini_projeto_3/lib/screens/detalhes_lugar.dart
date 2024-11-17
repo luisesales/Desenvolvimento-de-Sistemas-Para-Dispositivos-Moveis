@@ -4,12 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class DetalhesLugarScreen extends StatelessWidget {
-  const DetalhesLugarScreen({super.key});
+  final Lugar lugar;
+
+  const DetalhesLugarScreen({
+    super.key,
+    required this.lugar,
+    });
 
   @override
-  Widget build(BuildContext context) {
-
-    final lugar = ModalRoute.of(context)?.settings.arguments as Lugar;    
+  Widget build(BuildContext context) {        
 
     return Scaffold(
       appBar: AppBar(

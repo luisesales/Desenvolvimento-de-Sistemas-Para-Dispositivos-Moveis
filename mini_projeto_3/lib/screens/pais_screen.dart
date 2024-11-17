@@ -20,27 +20,36 @@ class PaisScreen extends StatelessWidget {
         Consumer<PaisesModel>(        
           builder: (context, paisesModel, child) {
             return GridView(
-            padding: EdgeInsets.all(16),
+              padding: EdgeInsets.all(16),
               gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                 maxCrossAxisExtent: 200,
                 mainAxisExtent: 120,
                 childAspectRatio: 3 / 2,
                 crossAxisSpacing: 20,
-                
               ),
               children: paisesModel.todos_paises.map((pais) => ItemPais(pais: pais)).toList(),
             );
           }
         ),
-      Positioned( 
+        Positioned( 
           bottom: 16, 
           right: 16, 
           child: Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               FloatingActionButton(
-                onPressed: () { Navigator.of(context).pushNamed('/adicionarPais'); },
-                tooltip: 'Adicionar Lugar',
+                onPressed: () {
+                  Navigator.of(context).pushNamed(
+                    '/adicionarPais',
+                    arguments: () {
+                      final snackBar = SnackBar(
+                        content: Text('País adicionado com Sucesso!'),
+                      );
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    },
+                  );
+                },
+                tooltip: 'Adicionar País',
                 child: Icon(Icons.add),
               ),
             ],

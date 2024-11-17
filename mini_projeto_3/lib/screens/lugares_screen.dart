@@ -55,6 +55,15 @@ class LugaresScreen extends StatelessWidget {
                                 color: Colors.red,
                                 onConditionMet: () {
                                   context.read<PaisesModel>().removeLugar(lugaresPorPais.elementAt(index));
+                                  Navigator.pop(context); // Fecha o modal bottom sheet
+                                  final snackBar = SnackBar( 
+                                    content: Text('${lugaresPorPais.elementAt(index).titulo} foi deletado com Sucesso!'), 
+                                    action: SnackBarAction( 
+                                      label: '', 
+                                      onPressed: () {}, 
+                                    ), 
+                                  ); 
+                                  ScaffoldMessenger.of(context).showSnackBar(snackBar); 
                                 },
                                 confirmAction: "Excluir",
                                 confirmLabel: "Tem certeza de que deseja excluir ${lugaresPorPais.elementAt(index).titulo}?",
@@ -81,7 +90,15 @@ class LugaresScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               FloatingActionButton(
-                onPressed: () { Navigator.of(context).pushNamed('/adicionarLugar'); },
+                onPressed: () { Navigator.of(context).pushNamed(
+                  '/adicionarLugar',
+                  arguments: () {
+                        final snackBar = SnackBar(
+                          content: Text('Lugar adicionado com Sucesso!'),
+                        );
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      },
+                  ); },
                 tooltip: 'Adicionar Lugar',
                 child: Icon(Icons.add),
               ),

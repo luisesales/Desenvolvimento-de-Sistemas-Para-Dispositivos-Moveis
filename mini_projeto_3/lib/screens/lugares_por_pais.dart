@@ -7,13 +7,16 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class LugarPorPaisScreen extends StatelessWidget {
-  
-  LugarPorPaisScreen({super.key});
+  final pais;
+
+  LugarPorPaisScreen({
+    super.key,
+    required this.pais,
+    });
 
   @override
   Widget build(BuildContext context) {
-
-    final pais = ModalRoute.of(context)?.settings.arguments as Pais;
+    
     
     //prepara a lista de lugares por pais
     final List<Lugar> lugaresPorPais = Provider.of<PaisesModel>(context).getLugares(pais.id);

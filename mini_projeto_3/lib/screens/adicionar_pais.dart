@@ -5,7 +5,9 @@ import 'package:provider/provider.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 
 class AdicionarPais extends StatefulWidget {
-  const AdicionarPais({super.key});
+  final VoidCallback? onCountryAdded;
+
+  const AdicionarPais({super.key, this.onCountryAdded});
 
   @override
   State<AdicionarPais> createState() => _AdicionarPaisState();
@@ -17,53 +19,50 @@ class _AdicionarPaisState extends State<AdicionarPais> {
   bool _wrongTitle = false;
   bool _wrongColor = false;
 
-  @override
-  Widget build(BuildContext context) {     
-    void _saveCountry(){
-      setState(() {
-        if (_titleController.text.isEmpty) {
-          _wrongTitle = true;
+  void _saveCountry() {
+    setState(() {
+      if (_titleController.text.isEmpty) {
+        _wrongTitle = true;
+        return;
+      }
+      _wrongTitle = false;
+
+      List<Pais> todos_paises = context.read<PaisesModel>().todos_paises;
+      for (Pais p in todos_paises) {
+        if (_selectedColor == p.cor) {
+          _wrongColor = true;
           return;
         }
-        _wrongTitle = false;
+      }
+      _wrongColor = false;
 
-        List<Pais> todos_paises = context.read<PaisesModel>().todos_paises;
-        for (Pais p in todos_paises) {        
-          if (_selectedColor == p.cor) {
-            _wrongColor = true;
-            return;
-          }
-        }
-        _wrongColor = false;
+      Provider.of<PaisesModel>(context, listen: false).addPais(Pais(
+        id: "c${todos_paises.length + 1}",
+        titulo: _titleController.text,
+        cor: _selectedColor,
+      ));
 
-        Provider.of<PaisesModel>(context, listen: false).addPais(Pais(
-          id: "c${todos_paises.length + 1}",         
-          titulo: _titleController.text, 
-          cor: _selectedColor,
-        ));
+      if (widget.onCountryAdded != null) {
+        widget.onCountryAdded!();
+      }
 
-        Navigator.of(context).pop();
-      });
-    }
+      Navigator.of(context).pop();
+    });
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Row(
-          children: [
-            IconButton(
-              onPressed: () {Navigator.of(context).pop();}, 
-              icon: Icon(Icons.arrow_back),
-            ),
-            Text(
-              "Países",
-              style: TextStyle(color: Colors.white),
-            ),
-          ],
-        ),
+        title: Text("Adicionar País", style: TextStyle(color: Colors.white)),
         backgroundColor: ThemeData().primaryColor,
-      ),      
+        leading: IconButton(
+          onPressed: () { Navigator.of(context).pop(); },
+          icon: Icon(Icons.arrow_back),
+        ),
+      ),
       body: Stack(
-        children: [ 
+        children: [
           SingleChildScrollView(
             child: Container(
               padding: EdgeInsets.all(32),
@@ -143,6 +142,6 @@ class _AdicionarPaisState extends State<AdicionarPais> {
           ),
         ],
       ),
-    );  
+    );
   }
 }

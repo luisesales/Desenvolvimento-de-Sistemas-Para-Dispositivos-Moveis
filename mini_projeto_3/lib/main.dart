@@ -1,4 +1,6 @@
 import 'package:mini_projeto_3/model/PaisesModel.dart';
+import 'package:mini_projeto_3/model/lugar.dart';
+import 'package:mini_projeto_3/model/pais.dart';
 import 'package:mini_projeto_3/screens/abas.dart';
 import 'package:mini_projeto_3/screens/configuracoes.dart';
 import 'package:mini_projeto_3/screens/detalhes_lugar.dart';
@@ -27,7 +29,15 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     model = PaisesModel();
-    model.initialize(); // Certifique-se de que a função initialize() é chamada apenas uma vez aqui
+    model.initialize(); 
+  }
+
+  // Função de callback para ser passada
+  void onCountryAdded(BuildContext context) {
+    final snackBar = SnackBar(
+      content: Text('País adicionado com Sucesso!'),
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
   @override
@@ -36,14 +46,32 @@ class _MyAppState extends State<MyApp> {
       create: (context) => model,
       child: MaterialApp(
         initialRoute: '/',
-        routes: {
-          '/': (ctx) => MinhasAbas(),
-          '/adicionarPais' : (ctx) => AdicionarPais(),
-          '/lugaresPorPais': (ctx) => LugarPorPaisScreen(),
-          '/detalheLugar': (ctx) => DetalhesLugarScreen(),
-          '/configuracoes': (ctx) => ConfigracoesScreen(),
-          '/adicionarLugar': (ctx) => AdicionarLugar(),
-          '/lugares': (ctx) => LugaresScreen(),
+        onGenerateRoute: (settings) {
+          // Verifique o nome da rota
+          switch (settings.name) {
+            case '/':
+              return MaterialPageRoute(builder: (ctx) => MinhasAbas());
+            case '/adicionarPais':
+              final VoidCallback? onCountryAddedCallback = settings.arguments as VoidCallback?;
+              return MaterialPageRoute(
+                builder: (ctx) => AdicionarPais(onCountryAdded: onCountryAddedCallback),
+              );
+            case '/lugaresPorPais':
+              final pais = settings.arguments as Pais;
+              return MaterialPageRoute(builder: (ctx) => LugarPorPaisScreen(pais: pais));
+            case '/detalheLugar':
+              final lugar = settings.arguments as Lugar;
+              return MaterialPageRoute(builder: (ctx) => DetalhesLugarScreen(lugar: lugar));
+            case '/configuracoes':
+              return MaterialPageRoute(builder: (ctx) => ConfigracoesScreen());
+            case '/adicionarLugar':
+              final VoidCallback? onPlaceAddedCallback = settings.arguments as VoidCallback?;
+              return MaterialPageRoute(builder: (ctx) => AdicionarLugar(onPlaceAdded: onPlaceAddedCallback));
+            case '/lugares':
+              return MaterialPageRoute(builder: (ctx) => LugaresScreen());
+            default:
+              return null;
+          }
         },
       ),
     );
