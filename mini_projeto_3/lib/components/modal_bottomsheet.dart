@@ -38,16 +38,20 @@ class ModalBottomSheet extends StatelessWidget {
             Text('${confirmLabel}'), 
             SizedBox(height: 16.0), 
             Row( 
-              mainAxisAlignment: MainAxisAlignment.end, 
+              mainAxisAlignment: MainAxisAlignment.center, 
               children: <Widget>[ 
                 TextButton( 
                   child: Text('Cancelar'), 
                   onPressed: () { Navigator.of(context).pop();}, 
                 ), 
+                Spacer(),
                 ElevatedButton( 
                   child: Text('${confirmAction}'), 
                   style:  ButtonStyle(backgroundColor: WidgetStatePropertyAll(color)),
-                  onPressed: () {if(true){onConditionMet();}}, 
+                  onPressed: () {if(true){
+                    onConditionMet();
+                    Navigator.of(context).pop();
+                    }}, 
                 ), 
               ], 
             ), 

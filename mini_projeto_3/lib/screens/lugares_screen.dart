@@ -12,7 +12,7 @@ class LugaresScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //prepara a lista de lugares por pais
+    // Prepara a lista de lugares por pais
     final List<Lugar> lugaresPorPais = context.watch<PaisesModel>().todos_lugares;
 
     return Scaffold(
@@ -29,7 +29,7 @@ class LugaresScreen extends StatelessWidget {
           itemCount: lugaresPorPais.length,
           itemBuilder: (context, index) {
             return Container(
-              margin: EdgeInsets.only(top:24),
+              margin: EdgeInsets.only(top: 24),
               child: Column(
                 children: [ 
                   Row(                                    
@@ -38,33 +38,41 @@ class LugaresScreen extends StatelessWidget {
                         flex: 2, 
                         child: IconButton(
                           tooltip: "Editar Lugar",
-                          onPressed: (){},
-                          color:  ThemeData().primaryColor,
+                          onPressed: () {},
+                          color: ThemeData().primaryColor,
                           icon: Icon(Icons.edit),
                         ),
                       ),
-                      Spacer(flex: 1,),
-
+                      Spacer(flex: 1),
                       Expanded(
                         flex: 2,
                         child: IconButton(
                           tooltip: "Excluir Lugar",
-                          onPressed: () => ModalBottomSheet(
-                                            color: Colors.red,
-                                            onConditionMet: (){context.read<PaisesModel>().removeLugar(lugaresPorPais.elementAt(index));},
-                                            confirmAction: "Excluir",
-                                            confirmLabel: "Tem certeza de que deseja excluir ${lugaresPorPais.elementAt(index).titulo}",    
-                                            confirmTitle: "Confirmação de Exclusão",
-                                          ),  
+                          onPressed: () => showModalBottomSheet(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return ModalBottomSheet(
+                                color: Colors.red,
+                                onConditionMet: () {
+                                  context.read<PaisesModel>().removeLugar(lugaresPorPais.elementAt(index));
+                                },
+                                confirmAction: "Excluir",
+                                confirmLabel: "Tem certeza de que deseja excluir ${lugaresPorPais.elementAt(index).titulo}?",
+                                confirmTitle: "Confirmação de Exclusão",
+                              );
+                            },
+                          ),  
                           color: Colors.red,                     
-                          icon: Icon(Icons.delete)
+                          icon: Icon(Icons.delete),
                         ),
                       ),
-                  ],),
+                    ],
+                  ),
                   ItemLugar(lugar: lugaresPorPais.elementAt(index)),
-              ],)
+                ],
+              ),
             );
-          },  
+          },
         ),
         Positioned( 
           bottom: 16, 
@@ -73,14 +81,14 @@ class LugaresScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               FloatingActionButton(
-                onPressed: (){Navigator.of(context).pushNamed('/adicionarLugar');},
+                onPressed: () { Navigator.of(context).pushNamed('/adicionarLugar'); },
                 tooltip: 'Adicionar Lugar',
                 child: Icon(Icons.add),
               ),
             ],
           ),
         ),      
-      ]),      
+      ]),
     );
   }
 }
