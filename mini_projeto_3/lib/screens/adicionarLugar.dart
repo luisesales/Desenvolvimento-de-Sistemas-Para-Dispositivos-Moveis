@@ -17,37 +17,47 @@ class AdicionarLugar extends StatefulWidget {
 }
 
 class _AdicionarLugarState extends State<AdicionarLugar> {
-
   
-
-  @override
-  Widget build(BuildContext context) {   
-    List<Lugar> todos_lugares = context.watch<PaisesModel>().todos_lugares;
-    List<Pais> todos_paises = context.watch<PaisesModel>().todos_paises;
-    final _titleController = TextEditingController();
-    String? _imageURL; 
-    double _avaliation = 0.0; 
-    double _cost = 0.0;
-    List<TextEditingController> _recomendations = [];
-    List<String> _countries = [];
-    bool _wrongTitle = false;
-    bool _wrongPais = false;  
-    bool _wrongImage = false;  
-    bool _wrongRecomendation = false;      
-
-    void _updateValue(dynamic newValue, dynamic variable){
+  final _titleController = TextEditingController();
+  String? _imageURL = ""; 
+  double _avaliation = 0.0; 
+  double _cost = 0.0;
+  List<TextEditingController> _recomendations = [];
+  List<String> _countries = [];
+  bool _wrongTitle = false;
+  bool _wrongPais = false;  
+  bool _wrongImage = false;  
+  bool _wrongRecomendation = false;  
+   void _updateValue(dynamic newValue, dynamic variable){
       setState(() {
         variable = newValue;
       });
     }
+
+    void _updateImageURL(String newImageURL) { 
+      setState(() { 
+        _imageURL = newImageURL; 
+      }); 
+    }
+
+   
+
+  @override
+  Widget build(BuildContext context) {   
+  List<Lugar> todos_lugares = context.read<PaisesModel>().todos_lugares;
+  List<Pais> todos_paises = context.read<PaisesModel>().todos_paises;     
 
     void _saveUser(){
     setState(() {
       if(_titleController.text.isEmpty){
         _wrongTitle = true;
         return;
+      }      
+      if(_countries.isEmpty){
+        _wrongPais = true;
+        return;
       }
-      if(_imageURL!.isEmpty ||
+      if(_imageURL == "" ||
        (todos_lugares.any((lugar) => (lugar.imagemUrl == _imageURL))) 
        ){
         _wrongImage = true;
@@ -58,11 +68,7 @@ class _AdicionarLugarState extends State<AdicionarLugar> {
           _wrongRecomendation = true;
           return;
         }
-      }
-      if(_countries.isEmpty){
-        _wrongPais = true;
-        return;
-      }
+      }      
       List<String> countriesIds = [];
       for(String s in _countries){
         String countryId = todos_paises.firstWhere((pais) => pais.titulo == s).id;
@@ -79,23 +85,31 @@ class _AdicionarLugarState extends State<AdicionarLugar> {
         id: "p${todos_lugares.length+1}", 
         paises: countriesIds, 
         titulo: _titleController.text, 
-        imagemUrl: _imageURL, 
+        imagemUrl: _imageURL!, 
         recomendacoes: formatRecomendations, 
         avaliacao: _avaliation, 
         custoMedio: _cost)
       );
+      Navigator.of(context).pop();
     });    
    }
+   
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          "Lugares",
-          style: TextStyle(color: Colors.white),
-        ),
+        title: Row(
+          children: [
+              IconButton(
+                onPressed: (){Navigator.of(context).pop();}, 
+                icon: Icon(Icons.arrow_back),
+              ),
+              Text(
+                "Lugares",
+                style: TextStyle(color: Colors.white),
+          ),
+        ]),
         backgroundColor: ThemeData().primaryColor,
-      ),
-      drawer: MeuDrawer(),
+      ),      
       body: Stack(children: [ 
         SingleChildScrollView(child : Container(
           padding: EdgeInsets.all(32),
@@ -164,7 +178,7 @@ class _AdicionarLugarState extends State<AdicionarLugar> {
                           ), 
                           Container(
                             margin: EdgeInsets.only(top: 16, bottom: 16),
-                            child: imagePicker(onImagePicked: (String){_updateValue(String,_imageURL);},)   
+                            child: imagePicker(onImagePicked: (String){_updateValue(String, _imageURL);},)   
                           ), 
                           Visibility(
                             visible: _wrongImage, 

@@ -4,4 +4,5 @@ class AppRoutes {
   static const PLACES_DETAIL = '/detalheLugar';
   static const SETTINGS = '/configuracoes';
   static const ADD_PLACE = '/adicionarLugar';
+  static const PLACES = '/lugares';
 }
