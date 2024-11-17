@@ -27,18 +27,24 @@ class _AdicionarLugarState extends State<AdicionarLugar> {
   bool _wrongTitle = false;
   bool _wrongPais = false;  
   bool _wrongImage = false;  
-  bool _wrongRecomendation = false;
-
-  void _updateValue(dynamic newValue, dynamic variable) {
-    setState(() {
-      variable = newValue;
-    });
-  }
+  bool _wrongRecomendation = false;  
 
   void _updateImageURL(String newImageURL) { 
     setState(() { 
       _imageURL = newImageURL; 
     }); 
+  }
+
+  void _updateCost(double value){
+    setState(() {
+      _cost = value;
+    });
+  }
+
+  void _updateAvaliation(double value){
+    setState(() {
+      _avaliation = value;
+    });
   }
 
   
@@ -140,7 +146,7 @@ class _AdicionarLugarState extends State<AdicionarLugar> {
                                   labelText: '', 
                                   labelIcon: Icons.star,
                                   onChanged: (double value) {
-                                    _updateValue(value, _avaliation);
+                                    _updateAvaliation(value);
                                   },
                                 ),
                               ),
@@ -154,7 +160,7 @@ class _AdicionarLugarState extends State<AdicionarLugar> {
                                   labelText: 'Custo :',
                                   labelIcon: Icons.attach_money,
                                   onChanged: (double value) {
-                                    _updateValue(value, _cost);
+                                    _updateCost(value);
                                   },
                                 ),                                                    
                               ), 
