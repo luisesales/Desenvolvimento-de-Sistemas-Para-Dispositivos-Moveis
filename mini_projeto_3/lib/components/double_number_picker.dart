@@ -29,13 +29,15 @@ class _DoubleNumberPickerState extends State<DoubleNumberPicker> {
  _increaseValue() { 
     setState(() {       
       _currentValue = (_currentValue + widget.step).clamp(widget.minValue, widget.maxValue); 
-      widget.onChanged(_currentValue);
+      double? newValue = double.tryParse(_currentValue.toStringAsFixed(widget.precision));
+      widget.onChanged(newValue!);
     }); 
   } 
   void _decreaseValue() { 
     setState(() {       
       _currentValue = (_currentValue - widget.step).clamp(widget.minValue, widget.maxValue); 
-      widget.onChanged(_currentValue);
+      double? newValue = double.tryParse(_currentValue.toStringAsFixed(widget.precision));
+      widget.onChanged(newValue!);
     }); 
   } 
   @override

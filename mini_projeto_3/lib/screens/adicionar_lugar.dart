@@ -166,7 +166,7 @@ class _AdicionarLugarState extends State<AdicionarLugar> {
                               ), 
                               Container(
                                 margin: EdgeInsets.only(top: 16, bottom: 16),
-                                child: imagePicker(
+                                child: ImagePickerWidget(
                                   onImagePicked: (String value) {
                                     _updateImageURL(value);
                                   },

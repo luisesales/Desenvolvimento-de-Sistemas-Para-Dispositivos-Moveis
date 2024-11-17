@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:mini_projeto_3/model/PaisesModel.dart';
 import 'package:mini_projeto_3/model/lugar.dart';
 import 'package:flutter/material.dart';
@@ -27,10 +29,19 @@ class DetalhesLugarScreen extends StatelessWidget {
           Container(
             height: 300,
             width: double.infinity,
-            child: Image.network(
-              lugar.imagemUrl,
-              fit: BoxFit.cover,
-            ),
+            child: lugar.imagemUrl.startsWith('http')
+            ? Image.network(
+                lugar.imagemUrl,
+                height: 250,
+                width: double.infinity,
+                fit: BoxFit.cover,
+              )
+            : Image.file(
+                File(lugar.imagemUrl),
+                height: 250,
+                width: double.infinity,
+                fit: BoxFit.cover,
+              ),
           ),
           Container(
             margin: const EdgeInsets.symmetric(vertical: 10),

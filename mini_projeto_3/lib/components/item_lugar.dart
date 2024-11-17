@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:mini_projeto_3/model/lugar.dart';
 import 'package:flutter/material.dart';
 
@@ -29,12 +31,19 @@ class ItemLugar extends StatelessWidget {
                   topLeft: Radius.circular(15),
                   topRight: Radius.circular(15),
                 ),
-                child: Image.network(
-                  lugar.imagemUrl,
-                  height: 250,
-                  width: double.infinity,
-                  fit: BoxFit.cover,
-                ),
+                child: lugar.imagemUrl.startsWith('http')
+                ? Image.network(
+                    lugar.imagemUrl,
+                    height: 250,
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                  )
+                : Image.file(
+                    File(lugar.imagemUrl),
+                    height: 250,
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                  ),
               ),
               Positioned(
                 //só funciona no contexto do Stack - posso posicionar o elemento
