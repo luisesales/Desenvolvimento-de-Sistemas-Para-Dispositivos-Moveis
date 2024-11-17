@@ -40,9 +40,27 @@ class PaisesModel with ChangeNotifier {
     _lugares.add(lugar);
     notifyListeners();
   }
+
   bool removeLugar(Lugar lugar){
     bool result =  _lugares.remove(lugar);
     notifyListeners();
     return result;
+  }
+
+  void addPais(Pais pais){
+    _paises.add(pais);
+    notifyListeners();
+  }
+
+  bool removePais(Pais pais){
+    bool result = _paises.remove(pais);
+    bool result2 = true;
+    for(Lugar l in _lugares){
+      if(l.paises.contains(pais.id)){      
+        result2 = l.paises.remove(pais.id);
+      }
+    }
+    notifyListeners();
+    return result == result2;
   }
 }

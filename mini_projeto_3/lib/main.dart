@@ -3,8 +3,9 @@ import 'package:mini_projeto_3/screens/abas.dart';
 import 'package:mini_projeto_3/screens/configuracoes.dart';
 import 'package:mini_projeto_3/screens/detalhes_lugar.dart';
 import 'package:mini_projeto_3/screens/lugares_por_pais.dart';
-import 'package:mini_projeto_3/screens/adicionarLugar.dart';
+import 'package:mini_projeto_3/screens/adicionar_lugar.dart';
 import 'package:mini_projeto_3/screens/lugares_screen.dart';
+import 'package:mini_projeto_3/screens/adicionar_pais.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -37,6 +38,7 @@ class _MyAppState extends State<MyApp> {
         initialRoute: '/',
         routes: {
           '/': (ctx) => MinhasAbas(),
+          '/adicionarPais' : (ctx) => AdicionarPais(),
           '/lugaresPorPais': (ctx) => LugarPorPaisScreen(),
           '/detalheLugar': (ctx) => DetalhesLugarScreen(),
           '/configuracoes': (ctx) => ConfigracoesScreen(),

@@ -16,22 +16,37 @@ class PaisScreen extends StatelessWidget {
           style: TextStyle(color: Colors.white),
         ),
       ), */
-      body: Consumer<PaisesModel>(
-        
-        builder: (context, paisesModel, child) {
-          return GridView(
-          padding: EdgeInsets.all(16),
-            gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-              maxCrossAxisExtent: 200,
-              mainAxisExtent: 120,
-              childAspectRatio: 3 / 2,
-              crossAxisSpacing: 20,
-              
-            ),
-            children: paisesModel.todos_paises.map((pais) => ItemPais(pais: pais)).toList(),
-          );
-        }
-      ),
+      body: Stack(children: [
+        Consumer<PaisesModel>(        
+          builder: (context, paisesModel, child) {
+            return GridView(
+            padding: EdgeInsets.all(16),
+              gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                maxCrossAxisExtent: 200,
+                mainAxisExtent: 120,
+                childAspectRatio: 3 / 2,
+                crossAxisSpacing: 20,
+                
+              ),
+              children: paisesModel.todos_paises.map((pais) => ItemPais(pais: pais)).toList(),
+            );
+          }
+        ),
+      Positioned( 
+          bottom: 16, 
+          right: 16, 
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              FloatingActionButton(
+                onPressed: () { Navigator.of(context).pushNamed('/adicionarPais'); },
+                tooltip: 'Adicionar Lugar',
+                child: Icon(Icons.add),
+              ),
+            ],
+          ),
+        ),
+      ]),      
     );
   }
 }

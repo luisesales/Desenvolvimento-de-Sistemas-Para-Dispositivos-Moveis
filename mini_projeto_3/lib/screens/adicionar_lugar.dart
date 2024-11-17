@@ -47,7 +47,7 @@ class _AdicionarLugarState extends State<AdicionarLugar> {
   List<Lugar> todos_lugares = context.read<PaisesModel>().todos_lugares;
   List<Pais> todos_paises = context.read<PaisesModel>().todos_paises;     
 
-    void _saveUser(){
+    void _savePlace(){
     setState(() {
       if(_titleController.text.isEmpty){
         _wrongTitle = true;
@@ -238,7 +238,7 @@ class _AdicionarLugarState extends State<AdicionarLugar> {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               FloatingActionButton(
-                onPressed: _saveUser,                  
+                onPressed: _savePlace,                  
                 tooltip: 'Salvar Dados',
 
                 child: Icon(Icons.save),
