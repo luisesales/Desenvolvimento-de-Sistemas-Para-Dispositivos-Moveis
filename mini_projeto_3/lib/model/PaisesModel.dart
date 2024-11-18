@@ -56,7 +56,7 @@ class PaisesModel with ChangeNotifier {
     bool result = _paises.remove(pais);
     bool result2 = true;
 
-    for (Lugar l in _lugares) {
+    /*for (Lugar l in _lugares) {
       if (l.paises.contains(pais.id)) {
         bool tempResult = l.paises.remove(pais.id);
         result2 = result2 && tempResult;
@@ -68,6 +68,8 @@ class PaisesModel with ChangeNotifier {
       notifyListeners();
     }
 
-    return result && result2; 
+    return result && result2; */
+    notifyListeners();
+    return result;
   }
 }

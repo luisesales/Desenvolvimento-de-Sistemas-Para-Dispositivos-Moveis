@@ -1,7 +1,6 @@
 import 'package:mini_projeto_3/components/item_pais.dart';
 import 'package:mini_projeto_3/components/modal_bottomsheet.dart';
 import 'package:mini_projeto_3/model/PaisesModel.dart';
-import 'package:mini_projeto_3/model/Pais.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -9,7 +8,7 @@ class PaisScreen extends StatelessWidget {
   const PaisScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) {    
     return Scaffold(
       body: Stack(
         children: [
@@ -55,7 +54,7 @@ class PaisScreen extends StatelessWidget {
                                     return ModalBottomSheet(
                                       color: Colors.red,
                                       onConditionMet: () {
-                                        paisesModel.removePais(pais);
+                                        paisesModel.removePais(pais);                                         
                                         Navigator.pop(context); // Fecha o modal bottom sheet
                                         final snackBar = SnackBar(
                                           content: Text('${pais.titulo} foi deletado com Sucesso!'),
@@ -64,7 +63,7 @@ class PaisScreen extends StatelessWidget {
                                             onPressed: () {},
                                           ),
                                         );
-                                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                        ScaffoldMessenger.of(context).showSnackBar(snackBar);                                        
                                       },
                                       confirmAction: "Excluir",
                                       confirmLabel: "Tem certeza de que deseja excluir ${pais.titulo}?",
