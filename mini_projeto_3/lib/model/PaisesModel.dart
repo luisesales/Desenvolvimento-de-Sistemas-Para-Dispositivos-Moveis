@@ -52,15 +52,22 @@ class PaisesModel with ChangeNotifier {
     notifyListeners();
   }
 
-  bool removePais(Pais pais){
+  bool removePais(Pais pais) {
     bool result = _paises.remove(pais);
     bool result2 = true;
-    for(Lugar l in _lugares){
-      if(l.paises.contains(pais.id)){      
-        result2 = l.paises.remove(pais.id);
+
+    for (Lugar l in _lugares) {
+      if (l.paises.contains(pais.id)) {
+        bool tempResult = l.paises.remove(pais.id);
+        result2 = result2 && tempResult;
       }
     }
-    notifyListeners();
-    return result == result2;
+
+    // Se qualquer remoção for bem-sucedida, atualize o estado
+    if (result || result2) {
+      notifyListeners();
+    }
+
+    return result && result2; 
   }
 }
