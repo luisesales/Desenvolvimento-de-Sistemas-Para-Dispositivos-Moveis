@@ -53,23 +53,29 @@ class PaisesModel with ChangeNotifier {
   }
 
   bool removePais(Pais pais) {
-    bool result = _paises.remove(pais);
-    bool result2 = true;
+    bool result = _paises.remove(pais);    
 
-    /*for (Lugar l in _lugares) {
+    for (Lugar l in _lugares) {
       if (l.paises.contains(pais.id)) {
-        bool tempResult = l.paises.remove(pais.id);
-        result2 = result2 && tempResult;
+        List<String> newList = [];
+        for(String s in l.paises){
+          if(s != pais.id){
+            newList.add(s);
+          }
+        }
+        Lugar newLugar = Lugar(
+          id: l.id,
+          paises: newList,
+          avaliacao: l.avaliacao,
+          recomendacoes: l.recomendacoes,
+          imagemUrl: l.imagemUrl,
+          custoMedio: l.custoMedio,
+          titulo: l.titulo
+        );
+        l = newLugar;        
       }
-    }
-
-    // Se qualquer remoção for bem-sucedida, atualize o estado
-    if (result || result2) {
-      notifyListeners();
-    }
-
-    return result && result2; */
-    notifyListeners();
-    return result;
+    }  
+    notifyListeners();    
+    return result;     
   }
 }
