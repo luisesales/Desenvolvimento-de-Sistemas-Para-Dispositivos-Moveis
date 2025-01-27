@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "1065563960761",
+    "firebase_url": "https://minha-agenda-app-c4c32-default-rtdb.firebaseio.com",
+    "project_id": "minha-agenda-app-c4c32",
+    "storage_bucket": "minha-agenda-app-c4c32.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1065563960761:android:1cbe344b80bd86d5533268",
+        "android_client_info": {
+          "package_name": "com.example.minha_agenda_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD0-oVPCqmDwf2cu39jc7ER6tmsBTwZ4MU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
