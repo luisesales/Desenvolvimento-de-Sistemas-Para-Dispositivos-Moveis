@@ -3,6 +3,7 @@ import 'package:minha_agenda_app/pages/createContact.dart';
 import 'package:minha_agenda_app/widgets/CustomNavigationBar.dart';
 import 'package:provider/provider.dart';
 import 'package:minha_agenda_app/model/contactList.dart';
+import 'package:minha_agenda_app/utils/routes.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -13,12 +14,6 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   int _selectedIndex = 0; // índice selecionado no BottomNavigationBar
-  DateTime? weddingDate; // Variável para armazenar a data do casamento
-
-  @override
-  void initState() {
-    super.initState();
-  }
 
   void _onItemTapped(int index) {
     setState(() {
@@ -29,9 +24,8 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     // Obter o nome de usuário a partir do Provider
-    final contactList = Provider.of<ContactList>(context);
 
-    List<Widget> _pages = [];
+    List<Widget> _pages = [CreateContact()];
 
     if (_selectedIndex == 0 || _selectedIndex == 2) {
       return Scaffold(

@@ -63,12 +63,8 @@ class _CreateContactState extends State<CreateContact> {
           ),
           _pickedImage!);
 
-      /* // Salvar remotamente
-      await Provider.of<ProductRepository>(context, listen: false)
-          .addProduct(product); */
-
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Produto salvo com sucesso!')),
+        const SnackBar(content: Text('PContato salvo com sucesso!')),
       );
 
       Navigator.of(context).pushAndRemoveUntil(
@@ -77,7 +73,7 @@ class _CreateContactState extends State<CreateContact> {
       );
     } catch (error) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Erro ao salvar o produto: $error')),
+        SnackBar(content: Text('Erro ao salvar o contato: $error')),
       );
       print("$error");
     }
@@ -88,10 +84,10 @@ class _CreateContactState extends State<CreateContact> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Anunciar produto',
+          'Criar Contato',
           style: TextStyle(color: Colors.white),
         ),
-        backgroundColor: const Color.fromARGB(255, 213, 29, 72),
+        backgroundColor: Colors.brown,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -100,7 +96,7 @@ class _CreateContactState extends State<CreateContact> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text(
-                'Crie um novo anúncio de produto ou serviço!',
+                'Crie um novo contato na agenda!',
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.normal,
@@ -110,26 +106,15 @@ class _CreateContactState extends State<CreateContact> {
               TextField(
                 controller: _nameController,
                 decoration: InputDecoration(
-                  labelText: 'Título do anúncio',
+                  labelText: 'Nome do contato',
                   prefixIcon: Icon(Icons.title, color: Colors.black),
                 ),
               ),
-              const SizedBox(height: 24),
-              const Text(
-                'Adicione uma foto ao seu anúncio',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xFF616161),
-                ),
-              ),
-              const SizedBox(height: 4),
-              ImageInput(_selectImage),
               const SizedBox(height: 16),
               TextField(
                 controller: _surnameController,
                 decoration: InputDecoration(
-                  labelText: 'Descrição (até 300 caracteres)',
+                  labelText: 'Sobrenome do contato',
                   prefixIcon: Icon(
                     Icons.description,
                     color: Colors.black,
@@ -138,6 +123,17 @@ class _CreateContactState extends State<CreateContact> {
                 ),
                 maxLines: 4,
               ),
+              const SizedBox(height: 24),
+              const Text(
+                'Adicione um avatar ao seu contato',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xFF616161),
+                ),
+              ),
+              const SizedBox(height: 4),
+              ImageInput(_selectImage),
               const SizedBox(height: 20),
               const Text(
                 'Localização',

@@ -13,21 +13,26 @@ class CustomNavigationBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
-      backgroundColor: Colors.blue, // Define a cor de fundo da barra
       items: const <BottomNavigationBarItem>[
         BottomNavigationBarItem(
-            icon: Icon(Icons.home, color: Colors.black), label: 'Home'),
+            icon: Icon(Icons.home, color: Colors.black),
+            label: 'Home',
+            backgroundColor: Colors.brown),
         BottomNavigationBarItem(
-            icon: Icon(Icons.star, color: Colors.black), label: 'Favorites'),
+            icon: Icon(Icons.star, color: Colors.black),
+            label: 'Favorites',
+            backgroundColor: Colors.brown),
         BottomNavigationBarItem(
-            icon: Icon(Icons.block, color: Colors.black), label: 'Blocked'),
+            icon: Icon(Icons.block, color: Colors.black),
+            label: 'Blocked',
+            backgroundColor: Colors.brown),
         BottomNavigationBarItem(
-            icon: Icon(Icons.plus_one, color: Colors.black),
-            label: 'Add Contact')
+            icon: Icon(Icons.add, color: Colors.black),
+            label: 'New Contact',
+            backgroundColor: Colors.brown)
       ],
       currentIndex: selectedIndex,
-      selectedItemColor: Colors.white, // cor do ícone selecionado
-      unselectedItemColor: Colors.white, // cor dos ícones não selecionados
+      selectedItemColor: Colors.black,
       onTap: onItemTapped,
     );
   }
