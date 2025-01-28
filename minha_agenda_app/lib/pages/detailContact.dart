@@ -20,7 +20,7 @@ class DetailContact extends StatelessWidget {
         backgroundColor: ThemeData().primaryColor,
         title: Text(
           "${contact.name} ${contact.surname}",
-          style: TextStyle(color: Colors.brown),
+          style: TextStyle(color: Colors.white),
         ),
       ),
       body: Column(
@@ -58,33 +58,61 @@ class DetailContact extends StatelessWidget {
                 color: Colors.white,
                 border: Border.all(color: Colors.grey),
                 borderRadius: BorderRadius.circular(10)),
-            child: ListView.builder(
-                itemCount: contact.recomendacoes.length,
-                itemBuilder: (contexto, index) {
-                  return Column(
-                    children: <Widget>[
-                      ListTile(
-                        leading: CircleAvatar(
-                          backgroundColor:
-                              Theme.of(context).colorScheme.secondary,
-                          child: Text('${index + 1}'),
-                        ),
-                        title: Text(contact.recomendacoes[index]),
-                        subtitle: Text(contact.titulo),
-                        onTap: () {
-                          print(contact.recomendacoes[index]);
-                        },
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Expanded(
+                      flex: 6,
+                      child: Column(
+                        children: [
+                          Row(children: [
+                            Icon(Icons.note),
+                            Text('Nome'),
+                          ]),
+                          Text('${contact.name} ${contact.surname}'),
+                        ],
                       ),
-                      Divider(),
-                    ],
-                  );
-                }),
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                      flex: 3,
+                      child: Column(
+                        children: [
+                          Row(children: [
+                            Icon(Icons.mail_rounded),
+                            Text('Email'),
+                          ]),
+                          Text(contact.email),
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      flex: 3,
+                      child: Column(
+                        children: [
+                          Row(children: [
+                            Icon(Icons.call_rounded),
+                            Text('Contato'),
+                          ]),
+                          Text(contact.phone),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           )
         ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          context.read<PaisesModel>().favorite(contact);
+          context.read<ContactList>().favorite(contact);
         },
         child: Icon(Icons.star_border),
       ),

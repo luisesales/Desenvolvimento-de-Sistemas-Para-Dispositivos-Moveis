@@ -24,6 +24,33 @@ class ContactList with ChangeNotifier {
     notifyListeners();
   }
 
+  void favorite(Contact contact) {
+    contact.status != 2
+        ? updateContact(contact.id, contact.name, contact.surname,
+            contact.email, contact.phone, contact.address!, contact.avatar, 2)
+        : updateContact(contact.id, contact.name, contact.surname,
+            contact.email, contact.phone, contact.address!, contact.avatar, 1);
+    notifyListeners();
+  }
+
+  void block(Contact contact) {
+    void favorite(Contact contact) {
+      contact.status != 0
+          ? updateContact(contact.id, contact.name, contact.surname,
+              contact.email, contact.phone, contact.address!, contact.avatar, 0)
+          : updateContact(
+              contact.id,
+              contact.name,
+              contact.surname,
+              contact.email,
+              contact.phone,
+              contact.address!,
+              contact.avatar,
+              1);
+      notifyListeners();
+    }
+  }
+
 // parâmetro de localização adicionado
   Future<String> addContact(String name, String surname, String email,
       String phone, Position address, File avatar) async {
@@ -96,7 +123,7 @@ class ContactList with ChangeNotifier {
     }
   }
 
-  Future<String> updateProduct(
+  Future<String> updateContact(
     String id,
     String name,
     String surname,

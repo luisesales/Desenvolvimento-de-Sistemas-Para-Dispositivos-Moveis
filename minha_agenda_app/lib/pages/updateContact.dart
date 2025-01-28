@@ -10,14 +10,14 @@ import 'package:minha_agenda_app/pages/home.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class CreateContact extends StatefulWidget {
-  const CreateContact({super.key});
+class UpdateContact extends StatefulWidget {
+  const UpdateContact({super.key});
 
   @override
-  State<CreateContact> createState() => _CreateContactState();
+  State<UpdateContact> createState() => _UpdateContactState();
 }
 
-class _CreateContactState extends State<CreateContact> {
+class _UpdateContactState extends State<UpdateContact> {
   final _nameController = TextEditingController();
   final _surnameController = TextEditingController();
   final _phoneController = TextEditingController();

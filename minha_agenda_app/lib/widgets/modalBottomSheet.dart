@@ -1,5 +1,3 @@
-import 'package:mini_projeto_3/model/lugar.dart';
-import 'package:mini_projeto_3/model/PaisesModel.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

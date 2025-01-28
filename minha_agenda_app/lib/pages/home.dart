@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:minha_agenda_app/pages/blocked.dart';
 import 'package:minha_agenda_app/pages/createContact.dart';
+import 'package:minha_agenda_app/pages/favorites.dart';
+import 'package:minha_agenda_app/pages/homeContent.dart';
 import 'package:minha_agenda_app/widgets/CustomNavigationBar.dart';
 import 'package:provider/provider.dart';
 import 'package:minha_agenda_app/model/contactList.dart';
@@ -25,7 +28,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     // Obter o nome de usuário a partir do Provider
 
-    List<Widget> _pages = [CreateContact()];
+    List<Widget> _pages = [HomeContent(), Favorites(), Blocked()];
 
     if (_selectedIndex == 0 || _selectedIndex == 2) {
       return Scaffold(
