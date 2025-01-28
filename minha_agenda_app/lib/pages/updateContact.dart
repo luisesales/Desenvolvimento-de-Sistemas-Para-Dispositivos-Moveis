@@ -52,7 +52,8 @@ class _UpdateContactState extends State<UpdateContact> {
 
     try {
       // Salvar localmente
-      Provider.of<ContactList>(context, listen: false).addContact(
+      Provider.of<ContactList>(context, listen: false).updateContact(
+          widget.contact.id,
           _nameController.text,
           _surnameController.text,
           _emailController.text,
@@ -62,7 +63,8 @@ class _UpdateContactState extends State<UpdateContact> {
             longitude: _currPosition!.longitude,
             address: _currPosition!.address,
           ),
-          _pickedImage!);
+          _pickedImage!,
+          widget.contact.status);
 
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Contato salvo com sucesso!')),
