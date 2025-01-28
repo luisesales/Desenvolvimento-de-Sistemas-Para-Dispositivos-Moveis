@@ -48,7 +48,7 @@ class Contact with ChangeNotifier {
           latitude: json['latitude'],
           longitude: json['longitude'],
           address: json['address']),
-      avatar: json['avatar'],
+      avatar: File(json['avatar']),
       status: json['status'] ?? 0,
     );
   }
@@ -62,7 +62,7 @@ class Contact with ChangeNotifier {
       'address': address!.address,
       'latitude': address!.latitude,
       'longitude': address!.longitude,
-      'avatar': avatar,
+      'avatar': avatar.path,
       'status': status
     };
     return data;

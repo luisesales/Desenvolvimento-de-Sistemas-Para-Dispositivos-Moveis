@@ -15,12 +15,12 @@ class Blocked extends StatefulWidget {
 class _BlockedState extends State<Blocked> {
   @override
   void initState() {
-    final response = Provider.of<ContactList>(context).loadContacts();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    final response = Provider.of<ContactList>(context).loadContacts();
     final List<Contact> contactList =
         Provider.of<ContactList>(context).contacts;
 

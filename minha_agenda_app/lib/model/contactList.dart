@@ -6,10 +6,13 @@ import 'package:minha_agenda_app/model/contact.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:minha_agenda_app/utils/dbUtils.dart';
 import 'package:minha_agenda_app/model/position.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:http/http.dart' as http;
 
 class ContactList with ChangeNotifier {
   final int MAX_USERS = 9999;
-  final url = "https://minha-agenda-app-c4c32-default-rtdb.firebaseio.com/";
+  final _baseUrl =
+      "https://minha-agenda-app-c4c32-default-rtdb.firebaseio.com/";
   List<Contact> _contactList = [];
   Contact? _currentContact; // Adicionando o usuário atual
 
@@ -34,21 +37,12 @@ class ContactList with ChangeNotifier {
   }
 
   void block(Contact contact) {
-    void favorite(Contact contact) {
-      contact.status != 0
-          ? updateContact(contact.id, contact.name, contact.surname,
-              contact.email, contact.phone, contact.address!, contact.avatar, 0)
-          : updateContact(
-              contact.id,
-              contact.name,
-              contact.surname,
-              contact.email,
-              contact.phone,
-              contact.address!,
-              contact.avatar,
-              1);
-      notifyListeners();
-    }
+    contact.status != 0
+        ? updateContact(contact.id, contact.name, contact.surname,
+            contact.email, contact.phone, contact.address!, contact.avatar, 0)
+        : updateContact(contact.id, contact.name, contact.surname,
+            contact.email, contact.phone, contact.address!, contact.avatar, 1);
+    notifyListeners();
   }
 
 // parâmetro de localização adicionado
@@ -77,10 +71,22 @@ class ContactList with ChangeNotifier {
         'avatar': newContact.avatar.path,
         'status': newContact.status
       });
-      _contactList.add(newContact);
-      notifyListeners();
+
+      var response = await http.post(Uri.parse('$_baseUrl/contacts.json'),
+          body: jsonEncode(newContact.toJson()));
+
+      if (response.statusCode == 200) {
+        final id = jsonDecode(response.body)['name'];
+        _contactList.add(newContact);
+        notifyListeners();
+      } else {
+        print("\n\nAconteceu algum erro na requisição\n\n");
+        throw Exception("Aconteceu algum erro na requisição");
+      }
+
       return 'Contato adicionado com sucesso!';
     } catch (error) {
+      print('\n\nErro ao adicionar contato: $error\n\n\n');
       return 'Erro ao adicionar contato: $error';
     }
   }
@@ -88,10 +94,19 @@ class ContactList with ChangeNotifier {
   Future<String> removeContact(String id) async {
     try {
       await DbUtil.delete('contacts', id);
-      _contactList.removeWhere((contact) => contact.id == id);
-      notifyListeners();
-      return 'Contato removido com sucesso!';
+      final response =
+          await http.delete(Uri.parse('$_baseUrl/contacts/${id}.json'));
+
+      if (response.statusCode == 200) {
+        _contactList.removeWhere((contact) => contact.id == id);
+        notifyListeners();
+        return 'Contato removido com sucesso!';
+      } else {
+        print("\n\nAconteceu algum erro na requisição\n\n");
+        throw Exception("Aconteceu algum erro durante a requisição");
+      }
     } catch (error) {
+      print('\n\nErro ao remover contato: $error\n\n\n');
       return 'Erro ao remover contato: $error';
     }
   }
@@ -116,9 +131,25 @@ class ContactList with ChangeNotifier {
                 status: item['status']),
           )
           .toList();
-      notifyListeners();
-      return 'Contatos carregados com sucesso!';
+      List<Contact> contacts = [];
+      final response = await http.get(Uri.parse('$_baseUrl/contacts.json'));
+
+      if (response.statusCode == 200) {
+        Map<String, dynamic> _productsJson = jsonDecode(response.body);
+
+        _productsJson.forEach((id, contact) {
+          contacts.add(Contact.fromJson(id, contact));
+        });
+        _contactList = contacts;
+        notifyListeners();
+        print('\n\nContatos carregados com sucesso!\n\n\n');
+        return 'Contatos carregados com sucesso!';
+      } else {
+        print("\n\nAconteceu algum erro na requisição\n\n");
+        return "Aconteceu algum erro na requisição";
+      }
     } catch (error) {
+      print('\n\nErro ao recuperar contatos: $error\n\n\n');
       return 'Erro ao recuperar contatos: $error';
     }
   }
@@ -158,10 +189,21 @@ class ContactList with ChangeNotifier {
             'status': newContact.status
           },
           id);
-      int altId = int.parse(id);
-      _contactList.replaceRange(altId, altId, {newContact});
-      return 'Produto atualizado com sucesso!';
+      var response = await http.put(Uri.parse('$_baseUrl/contacts/${id}.json'),
+          body: jsonEncode(newContact.toJson()));
+
+      if (response.statusCode == 200) {
+        _contactList.removeWhere((contact) => contact.id == id);
+        _contactList.add(newContact);
+        notifyListeners();
+        print('\n\nContato atualizado com sucesso!\n\n\n');
+        return '\n\nContato atualizado com sucesso!\n\n\n';
+      } else {
+        print("\n\nAconteceu algum erro na requisição\n\n");
+        throw Exception("Aconteceu algum erro na requisição");
+      }
     } catch (error) {
+      print('\n\nErro ao atualizar contato: $error\n\n\n');
       return 'Erro ao atualizar contato: $error';
     }
   }

@@ -11,7 +11,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class UpdateContact extends StatefulWidget {
-  const UpdateContact({super.key});
+  final Contact contact;
+
+  const UpdateContact({super.key, required this.contact});
 
   @override
   State<UpdateContact> createState() => _UpdateContactState();
@@ -32,6 +34,17 @@ class _UpdateContactState extends State<UpdateContact> {
 
   void _savePosition(Position currPosition) {
     _currPosition = currPosition;
+  }
+
+  @override
+  void initState() {
+    _nameController.text = widget.contact.name;
+    _surnameController.text = widget.contact.surname;
+    _phoneController.text = widget.contact.phone;
+    _emailController.text = widget.contact.email;
+    _selectImage(widget.contact.avatar);
+    _savePosition(widget.contact.address!);
+    super.initState();
   }
 
   void _submitForm() async {
@@ -64,7 +77,7 @@ class _UpdateContactState extends State<UpdateContact> {
           _pickedImage!);
 
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('PContato salvo com sucesso!')),
+        const SnackBar(content: Text('Contato salvo com sucesso!')),
       );
 
       Navigator.of(context).pushAndRemoveUntil(
@@ -84,7 +97,7 @@ class _UpdateContactState extends State<UpdateContact> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Criar Contato',
+          'Atualizar Contato',
           style: TextStyle(color: Colors.white),
         ),
         backgroundColor: Colors.brown,
@@ -96,7 +109,7 @@ class _UpdateContactState extends State<UpdateContact> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text(
-                'Crie um novo contato na agenda!',
+                'Atualize contato na agenda!',
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.normal,

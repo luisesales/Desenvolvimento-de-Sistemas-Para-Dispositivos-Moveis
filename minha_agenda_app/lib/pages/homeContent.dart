@@ -13,16 +13,14 @@ class HomeContent extends StatefulWidget {
 }
 
 class _HomeContentState extends State<HomeContent> {
-  int _selectedIndex = 0; // índice selecionado no BottomNavigationBar
-
   @override
   void initState() {
-    final response = Provider.of<ContactList>(context).loadContacts();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    final response = Provider.of<ContactList>(context).loadContacts();
     final List<Contact> contactList =
         Provider.of<ContactList>(context).contacts;
 
@@ -84,7 +82,7 @@ class _HomeContentState extends State<HomeContent> {
                     ),
                   ],
                 ),
-                DetalharContato(contato: contactList.elementAt(index)),
+                ContactCard(contact: contactList.elementAt(index)),
               ],
             ),
           );
@@ -99,7 +97,7 @@ class _HomeContentState extends State<HomeContent> {
             FloatingActionButton(
               onPressed: () {
                 Navigator.of(context).pushNamed(
-                  '/adicionarContato',
+                  '/input-contact',
                   arguments: () {
                     final snackBar = SnackBar(
                       content: Text('Contato adicionado com Sucesso!'),

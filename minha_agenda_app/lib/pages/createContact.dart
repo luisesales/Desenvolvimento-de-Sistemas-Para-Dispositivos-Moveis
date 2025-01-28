@@ -64,7 +64,7 @@ class _CreateContactState extends State<CreateContact> {
           _pickedImage!);
 
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('PContato salvo com sucesso!')),
+        const SnackBar(content: Text('Contato salvo com sucesso!')),
       );
 
       Navigator.of(context).pushAndRemoveUntil(
@@ -116,12 +116,10 @@ class _CreateContactState extends State<CreateContact> {
                 decoration: InputDecoration(
                   labelText: 'Sobrenome do contato',
                   prefixIcon: Icon(
-                    Icons.description,
+                    Icons.title,
                     color: Colors.black,
                   ),
-                  border: const OutlineInputBorder(),
                 ),
-                maxLines: 4,
               ),
               const SizedBox(height: 24),
               const Text(

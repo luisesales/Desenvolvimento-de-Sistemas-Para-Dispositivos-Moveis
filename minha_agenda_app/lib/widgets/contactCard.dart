@@ -8,6 +8,16 @@ class ContactCard extends StatelessWidget {
 
   final Contact contact;
 
+  Text ReturnStatusText(int status) {
+    if (status == 1) {
+      return Text(style: TextStyle(color: Colors.green), "NORMAL");
+    } else if (status == 2) {
+      return Text(style: TextStyle(color: Colors.blue), "FAVORITO");
+    } else {
+      return Text(style: TextStyle(color: Colors.red), "BLOQUEADO");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -93,7 +103,24 @@ class ContactCard extends StatelessWidget {
                   ),
                 ],
               ),
-            )
+            ),
+            Padding(
+              padding: EdgeInsets.all(20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: <Widget>[
+                  Row(
+                    children: <Widget>[
+                      Icon(Icons.call_rounded),
+                      SizedBox(
+                        width: 6,
+                      ),
+                      ReturnStatusText(contact.status)
+                    ],
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),

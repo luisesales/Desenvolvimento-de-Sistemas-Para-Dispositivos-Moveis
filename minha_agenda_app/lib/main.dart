@@ -38,9 +38,7 @@ class _MyAppState extends State<MyApp> {
               labelLarge: TextStyle(fontSize: 24, color: Colors.amber),
             )),
         home: Home(),
-        routes: {
-          //Routes.DETAIL_CONTACT: (context) => DetailContact( contact)
-        },
+        routes: {Routes.INPUT_CONTACT: (context) => CreateContact()},
         debugShowCheckedModeBanner: false,
       ),
     );

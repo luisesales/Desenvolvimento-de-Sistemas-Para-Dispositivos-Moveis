@@ -26,10 +26,6 @@ class CustomNavigationBar extends StatelessWidget {
             icon: Icon(Icons.block, color: Colors.black),
             label: 'Blocked',
             backgroundColor: Colors.brown),
-        BottomNavigationBarItem(
-            icon: Icon(Icons.add, color: Colors.black),
-            label: 'New Contact',
-            backgroundColor: Colors.brown)
       ],
       currentIndex: selectedIndex,
       selectedItemColor: Colors.black,

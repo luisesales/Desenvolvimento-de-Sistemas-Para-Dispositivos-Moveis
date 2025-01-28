@@ -1,4 +1,4 @@
-/*import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 class ProductService {
   final DatabaseReference _dbRef =
@@ -75,4 +75,4 @@ class ProductService {
       return 'Erro ao atualizar contato: $error';
     }
   }
-}*/
+}

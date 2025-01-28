@@ -13,16 +13,14 @@ class Favorites extends StatefulWidget {
 }
 
 class _FavoritesState extends State<Favorites> {
-  int _selectedIndex = 0; // índice selecionado no BottomNavigationBar
-
   @override
   void initState() {
-    final response = Provider.of<ContactList>(context).loadContacts();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    final response = Provider.of<ContactList>(context).loadContacts();
     final List<Contact> contactList =
         Provider.of<ContactList>(context).contacts;
 
