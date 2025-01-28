@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:minha_agenda_app/pages/createContact.dart';
+import 'package:minha_agenda_app/pages/detailContact.dart';
+import 'package:minha_agenda_app/pages/updateContact.dart';
 import 'package:provider/provider.dart';
 
 import 'package:minha_agenda_app/model/contactList.dart';
 import 'package:minha_agenda_app/utils/routes.dart';
 import 'package:minha_agenda_app/pages/home.dart';
+import 'package:minha_agenda_app/model/contact.dart';
 
 void main() {
   runApp(MyApp());
@@ -38,7 +41,19 @@ class _MyAppState extends State<MyApp> {
               labelLarge: TextStyle(fontSize: 24, color: Colors.amber),
             )),
         home: Home(),
-        routes: {Routes.INPUT_CONTACT: (context) => CreateContact()},
+        routes: {
+          Routes.INPUT_CONTACT: (context) => CreateContact(),
+          Routes.DETAIL_CONTACT: (context) {
+            final Contact contact =
+                ModalRoute.of(context)!.settings.arguments as Contact;
+            return DetailContact(contact: contact);
+          },
+          Routes.UPDATE_CONTACT: (context) {
+            final Contact contact =
+                ModalRoute.of(context)!.settings.arguments as Contact;
+            return UpdateContact(contact: contact);
+          },
+        },
         debugShowCheckedModeBanner: false,
       ),
     );

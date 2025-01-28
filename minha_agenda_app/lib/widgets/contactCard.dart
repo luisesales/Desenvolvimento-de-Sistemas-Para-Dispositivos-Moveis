@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:minha_agenda_app/model/contact.dart';
 import 'package:flutter/material.dart';
+import 'package:minha_agenda_app/pages/detailContact.dart';
 
 class ContactCard extends StatelessWidget {
   const ContactCard({super.key, required this.contact});
@@ -23,7 +24,7 @@ class ContactCard extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         Navigator.of(context).pushNamed(
-          '/Contact',
+          '/contact',
           arguments: contact,
         );
       },
@@ -111,7 +112,7 @@ class ContactCard extends StatelessWidget {
                 children: <Widget>[
                   Row(
                     children: <Widget>[
-                      Icon(Icons.call_rounded),
+                      Icon(Icons.mode_comment_rounded),
                       SizedBox(
                         width: 6,
                       ),

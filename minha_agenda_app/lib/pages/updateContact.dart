@@ -12,7 +12,6 @@ import 'package:provider/provider.dart';
 
 class UpdateContact extends StatefulWidget {
   final Contact contact;
-
   const UpdateContact({super.key, required this.contact});
 
   @override
@@ -36,17 +35,6 @@ class _UpdateContactState extends State<UpdateContact> {
     _currPosition = currPosition;
   }
 
-  @override
-  void initState() {
-    _nameController.text = widget.contact.name;
-    _surnameController.text = widget.contact.surname;
-    _phoneController.text = widget.contact.phone;
-    _emailController.text = widget.contact.email;
-    _selectImage(widget.contact.avatar);
-    _savePosition(widget.contact.address!);
-    super.initState();
-  }
-
   void _submitForm() async {
     if (_nameController.text.isEmpty ||
         _surnameController.text.isEmpty ||
@@ -67,8 +55,8 @@ class _UpdateContactState extends State<UpdateContact> {
       Provider.of<ContactList>(context, listen: false).addContact(
           _nameController.text,
           _surnameController.text,
-          _phoneController.text,
           _emailController.text,
+          _phoneController.text,
           Position(
             latitude: _currPosition!.latitude,
             longitude: _currPosition!.longitude,
@@ -90,6 +78,17 @@ class _UpdateContactState extends State<UpdateContact> {
       );
       print("$error");
     }
+  }
+
+  @override
+  void initState() {
+    _nameController.text = widget.contact.name;
+    _surnameController.text = widget.contact.surname;
+    _phoneController.text = widget.contact.phone;
+    _emailController.text = widget.contact.email;
+    //_selectImage(widget.contact.avatar);
+    //_savePosition(widget.contact.address!);
+    super.initState();
   }
 
   @override
@@ -129,12 +128,10 @@ class _UpdateContactState extends State<UpdateContact> {
                 decoration: InputDecoration(
                   labelText: 'Sobrenome do contato',
                   prefixIcon: Icon(
-                    Icons.description,
+                    Icons.title,
                     color: Colors.black,
                   ),
-                  border: const OutlineInputBorder(),
                 ),
-                maxLines: 4,
               ),
               const SizedBox(height: 24),
               const Text(
@@ -211,7 +208,7 @@ class _UpdateContactState extends State<UpdateContact> {
                     color: Colors.white,
                   ),
                   label: const Text(
-                    'Criar Contato',
+                    'Atualizar Contato',
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,

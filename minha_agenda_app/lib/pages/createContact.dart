@@ -54,8 +54,8 @@ class _CreateContactState extends State<CreateContact> {
       Provider.of<ContactList>(context, listen: false).addContact(
           _nameController.text,
           _surnameController.text,
-          _phoneController.text,
           _emailController.text,
+          _phoneController.text,
           Position(
             latitude: _currPosition!.latitude,
             longitude: _currPosition!.longitude,

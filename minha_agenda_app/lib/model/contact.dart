@@ -40,16 +40,16 @@ class Contact with ChangeNotifier {
   factory Contact.fromJson(String id, Map<String, dynamic> json) {
     return Contact(
       id: id,
-      name: json['name'],
-      surname: json['surname'],
-      email: json['email'],
-      phone: json['phone'],
+      name: json['name'] as String,
+      surname: json['surname'] as String,
+      email: json['email'] as String,
+      phone: json['phone'] as String,
       address: Position(
-          latitude: json['latitude'],
-          longitude: json['longitude'],
-          address: json['address']),
-      avatar: File(json['avatar']),
-      status: json['status'] ?? 0,
+          latitude: json['latitude'] as double,
+          longitude: json['longitude'] as double,
+          address: json['address'] as String),
+      avatar: File(json['avatar'] as String),
+      status: json['status'] as int ?? 0,
     );
   }
   Map<String, dynamic> toJson() {

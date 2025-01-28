@@ -14,10 +14,20 @@ class ContactList with ChangeNotifier {
   final _baseUrl =
       "https://minha-agenda-app-c4c32-default-rtdb.firebaseio.com/";
   List<Contact> _contactList = [];
+  List<Contact> _favorites = [];
+  List<Contact> _blocked = [];
   Contact? _currentContact; // Adicionando o usuário atual
 
   List<Contact> get contacts {
     return [..._contactList];
+  }
+
+  List<Contact> get favorites {
+    return [..._favorites];
+  }
+
+  List<Contact> get blocked {
+    return [..._blocked];
   }
 
   Contact? get currentContact => _currentContact;
@@ -59,7 +69,7 @@ class ContactList with ChangeNotifier {
         status: 1);
 
     try {
-      await DbUtil.insert('contacts', {
+      /*await DbUtil.insert('contacts', {
         'id': newContact.id,
         'name': newContact.name,
         'surname': newContact.surname,
@@ -70,17 +80,20 @@ class ContactList with ChangeNotifier {
         'longitude': newContact.address!.longitude,
         'avatar': newContact.avatar.path,
         'status': newContact.status
-      });
+      });*/
 
       var response = await http.post(Uri.parse('$_baseUrl/contacts.json'),
           body: jsonEncode(newContact.toJson()));
+
+      print("Codigo ${response.statusCode} \n\n");
+      print("Corpo ${response.body} \n\n");
 
       if (response.statusCode == 200) {
         final id = jsonDecode(response.body)['name'];
         _contactList.add(newContact);
         notifyListeners();
       } else {
-        print("\n\nAconteceu algum erro na requisição\n\n");
+        print("\n\nAconteceu algum erro na requisição ${response}\n\n");
         throw Exception("Aconteceu algum erro na requisição");
       }
 
@@ -93,27 +106,30 @@ class ContactList with ChangeNotifier {
 
   Future<String> removeContact(String id) async {
     try {
-      await DbUtil.delete('contacts', id);
+      //await DbUtil.delete('contacts', id);
       final response =
           await http.delete(Uri.parse('$_baseUrl/contacts/${id}.json'));
+
+      print("Codigo ${response.statusCode} \n\n");
+      print("Corpo ${response.body} \n\n");
 
       if (response.statusCode == 200) {
         _contactList.removeWhere((contact) => contact.id == id);
         notifyListeners();
         return 'Contato removido com sucesso!';
       } else {
-        print("\n\nAconteceu algum erro na requisição\n\n");
+        print("\n\nAconteceu algum erro na requisição ${response}\n\n");
         throw Exception("Aconteceu algum erro durante a requisição");
       }
     } catch (error) {
-      print('\n\nErro ao remover contato: $error\n\n\n');
+      print('\n\nErro ao remover contato: $error \n\n\n');
       return 'Erro ao remover contato: $error';
     }
   }
 
   Future<String> loadContacts() async {
     try {
-      final dataList = await DbUtil.getData('contacts');
+      /*final dataList = await DbUtil.getData('contacts');
       _contactList = dataList
           .map(
             (item) => Contact(
@@ -130,22 +146,25 @@ class ContactList with ChangeNotifier {
                 ),
                 status: item['status']),
           )
-          .toList();
+          .toList();*/
       List<Contact> contacts = [];
       final response = await http.get(Uri.parse('$_baseUrl/contacts.json'));
+      print("Codigo ${response.statusCode} \n\n");
+      print("Corpo ${response.body} \n\n");
 
       if (response.statusCode == 200) {
-        Map<String, dynamic> _productsJson = jsonDecode(response.body);
-
-        _productsJson.forEach((id, contact) {
-          contacts.add(Contact.fromJson(id, contact));
-        });
-        _contactList = contacts;
-        notifyListeners();
+        if (response.body != "null") {
+          Map<String, dynamic> _productsJson = jsonDecode(response.body);
+          _productsJson.forEach((id, contact) {
+            contacts.add(Contact.fromJson(id, contact));
+          });
+          _contactList = contacts;
+          notifyListeners();
+        }
         print('\n\nContatos carregados com sucesso!\n\n\n');
         return 'Contatos carregados com sucesso!';
       } else {
-        print("\n\nAconteceu algum erro na requisição\n\n");
+        print("\n\nAconteceu algum erro na requisição ${response}\n\n");
         return "Aconteceu algum erro na requisição";
       }
     } catch (error) {
@@ -175,7 +194,7 @@ class ContactList with ChangeNotifier {
         status: status);
 
     try {
-      await DbUtil.update(
+      /*await DbUtil.update(
           'contacts',
           {
             'name': newContact.name,
@@ -188,9 +207,12 @@ class ContactList with ChangeNotifier {
             'avatar': newContact.avatar.path,
             'status': newContact.status
           },
-          id);
+          id);*/
       var response = await http.put(Uri.parse('$_baseUrl/contacts/${id}.json'),
           body: jsonEncode(newContact.toJson()));
+
+      print("Codigo ${response.statusCode} \n\n");
+      print("Corpo ${response.body} \n\n");
 
       if (response.statusCode == 200) {
         _contactList.removeWhere((contact) => contact.id == id);
@@ -199,7 +221,7 @@ class ContactList with ChangeNotifier {
         print('\n\nContato atualizado com sucesso!\n\n\n');
         return '\n\nContato atualizado com sucesso!\n\n\n';
       } else {
-        print("\n\nAconteceu algum erro na requisição\n\n");
+        print("\n\nAconteceu algum erro na requisição ${response}\n\n");
         throw Exception("Aconteceu algum erro na requisição");
       }
     } catch (error) {

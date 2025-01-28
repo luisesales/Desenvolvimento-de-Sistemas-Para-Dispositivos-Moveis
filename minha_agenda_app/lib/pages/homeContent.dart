@@ -1,5 +1,6 @@
 import 'package:minha_agenda_app/model/contact.dart';
 import 'package:minha_agenda_app/model/contactList.dart';
+import 'package:minha_agenda_app/pages/updateContact.dart';
 import 'package:minha_agenda_app/widgets/modalBottomSheet.dart';
 import 'package:minha_agenda_app/widgets/contactCard.dart';
 import 'package:flutter/material.dart';
@@ -38,7 +39,10 @@ class _HomeContentState extends State<HomeContent> {
                       flex: 2,
                       child: IconButton(
                         tooltip: "Editar Contato",
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.of(context).pushNamed('/update-contact',
+                              arguments: contactList.elementAt(index));
+                        },
                         color: ThemeData().primaryColor,
                         icon: Icon(Icons.edit),
                       ),

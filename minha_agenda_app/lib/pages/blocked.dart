@@ -4,6 +4,7 @@ import 'package:minha_agenda_app/widgets/modalBottomSheet.dart';
 import 'package:minha_agenda_app/widgets/contactCard.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:minha_agenda_app/pages/updateContact.dart';
 
 class Blocked extends StatefulWidget {
   Blocked({super.key});
@@ -24,9 +25,13 @@ class _BlockedState extends State<Blocked> {
     final List<Contact> contactList =
         Provider.of<ContactList>(context).contacts;
 
+    // Filtra a lista de contatos para incluir apenas aqueles com status 2
+    final List<Contact> filteredContactList =
+        contactList.where((contact) => contact.status == 0).toList();
+
     return Stack(children: [
       ListView.builder(
-        itemCount: contactList.length,
+        itemCount: filteredContactList.length,
         itemBuilder: (context, index) {
           return Container(
             margin: EdgeInsets.only(top: 24),
@@ -38,7 +43,9 @@ class _BlockedState extends State<Blocked> {
                       flex: 2,
                       child: IconButton(
                         tooltip: "Editar Contato",
-                        onPressed: () {},
+                        onPressed: () {
+                          UpdateContact(contact: contactList.elementAt(index));
+                        },
                         color: ThemeData().primaryColor,
                         icon: Icon(Icons.edit),
                       ),
@@ -55,12 +62,11 @@ class _BlockedState extends State<Blocked> {
                               color: Colors.red,
                               onConditionMet: () {
                                 context.read<ContactList>().removeContact(
-                                    contactList.elementAt(index).id);
-                                Navigator.pop(
-                                    context); // Fecha o modal bottom sheet
+                                    filteredContactList.elementAt(index).id);
+                                Navigator.pop(context);
                                 final snackBar = SnackBar(
                                   content: Text(
-                                      '${contactList.elementAt(index).name} ${contactList.elementAt(index).surname} foi deletado com Sucesso!'),
+                                      '${filteredContactList.elementAt(index).name} ${filteredContactList.elementAt(index).surname} foi deletado com Sucesso!'),
                                   action: SnackBarAction(
                                     label: '',
                                     onPressed: () {},
@@ -71,7 +77,7 @@ class _BlockedState extends State<Blocked> {
                               },
                               confirmAction: "Excluir",
                               confirmLabel:
-                                  "Tem certeza de que deseja excluir ${contactList.elementAt(index).name} ${contactList.elementAt(index).surname}?",
+                                  "Tem certeza de que deseja excluir ${filteredContactList.elementAt(index).name} ${filteredContactList.elementAt(index).surname}?",
                               confirmTitle: "Confirmação de Exclusão",
                             );
                           },
@@ -82,7 +88,7 @@ class _BlockedState extends State<Blocked> {
                     ),
                   ],
                 ),
-                ContactCard(contact: contactList.elementAt(index)),
+                ContactCard(contact: filteredContactList.elementAt(index)),
               ],
             ),
           );
