@@ -1,8 +1,8 @@
+import 'package:flutter/material.dart';
 import 'package:minha_agenda_app/model/contact.dart';
 import 'package:minha_agenda_app/model/contactList.dart';
-import 'package:minha_agenda_app/widgets/modalBottomSheet.dart';
 import 'package:minha_agenda_app/widgets/contactCard.dart';
-import 'package:flutter/material.dart';
+import 'package:minha_agenda_app/widgets/modalBottomSheet.dart';
 import 'package:provider/provider.dart';
 import 'package:minha_agenda_app/pages/updateContact.dart';
 
@@ -21,77 +21,95 @@ class _FavoritesState extends State<Favorites> {
 
   @override
   Widget build(BuildContext context) {
-    final response = Provider.of<ContactList>(context).loadContacts();
-    final List<Contact> contactList =
-        Provider.of<ContactList>(context).contacts;
-
-    // Filtra a lista de contatos para incluir apenas aqueles com status 2
-    final List<Contact> filteredContactList =
-        contactList.where((contact) => contact.status == 2).toList();
-
     return Stack(children: [
-      ListView.builder(
-        itemCount: filteredContactList.length,
-        itemBuilder: (context, index) {
-          return Container(
-            margin: EdgeInsets.only(top: 24),
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    Expanded(
-                      flex: 2,
-                      child: IconButton(
-                        tooltip: "Editar Contato",
-                        onPressed: () {
-                          UpdateContact(contact: contactList.elementAt(index));
-                        },
-                        color: ThemeData().primaryColor,
-                        icon: Icon(Icons.edit),
-                      ),
-                    ),
-                    Spacer(flex: 1),
-                    Expanded(
-                      flex: 2,
-                      child: IconButton(
-                        tooltip: "Excluir Contato",
-                        onPressed: () => showModalBottomSheet(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return ModalBottomSheet(
-                              color: Colors.red,
-                              onConditionMet: () {
-                                context.read<ContactList>().removeContact(
-                                    filteredContactList.elementAt(index).id);
-                                Navigator.pop(context);
-                                final snackBar = SnackBar(
-                                  content: Text(
-                                      '${filteredContactList.elementAt(index).name} ${filteredContactList.elementAt(index).surname} foi deletado com Sucesso!'),
-                                  action: SnackBarAction(
-                                    label: '',
-                                    onPressed: () {},
+      FutureBuilder(
+        future: Provider.of<ContactList>(context, listen: false).loadContacts(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          } else if (snapshot.error != null) {
+            return Center(child: Text('Ocorreu um erro!'));
+          } else {
+            return Consumer<ContactList>(
+              builder: (ctx, contactList, child) {
+                final List<Contact> filteredContactList = contactList.contacts
+                    .where((contact) => contact.status == 2)
+                    .toList();
+                return ListView.builder(
+                  itemCount: filteredContactList.length,
+                  itemBuilder: (context, index) {
+                    return Container(
+                      margin: EdgeInsets.only(top: 24),
+                      child: Column(
+                        children: [
+                          Row(
+                            children: [
+                              Expanded(
+                                flex: 2,
+                                child: IconButton(
+                                  tooltip: "Editar Contato",
+                                  onPressed: () {
+                                    Navigator.of(context).pushNamed(
+                                      '/update-contact',
+                                      arguments:
+                                          filteredContactList.elementAt(index),
+                                    );
+                                  },
+                                  color: Theme.of(context).primaryColor,
+                                  icon: Icon(Icons.edit),
+                                ),
+                              ),
+                              Spacer(flex: 1),
+                              Expanded(
+                                flex: 2,
+                                child: IconButton(
+                                  tooltip: "Excluir Contato",
+                                  onPressed: () => showModalBottomSheet(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return ModalBottomSheet(
+                                        color: Colors.red,
+                                        onConditionMet: () {
+                                          context
+                                              .read<ContactList>()
+                                              .removeContact(filteredContactList
+                                                  .elementAt(index)
+                                                  .id);
+                                          Navigator.pop(context);
+                                          final snackBar = SnackBar(
+                                            content: Text(
+                                                '${filteredContactList.elementAt(index).name} ${filteredContactList.elementAt(index).surname} foi deletado com Sucesso!'),
+                                            action: SnackBarAction(
+                                              label: '',
+                                              onPressed: () {},
+                                            ),
+                                          );
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(snackBar);
+                                        },
+                                        confirmAction: "Excluir",
+                                        confirmLabel:
+                                            "Tem certeza de que deseja excluir ${filteredContactList.elementAt(index).name} ${filteredContactList.elementAt(index).surname}?",
+                                        confirmTitle: "Confirmação de Exclusão",
+                                      );
+                                    },
                                   ),
-                                );
-                                ScaffoldMessenger.of(context)
-                                    .showSnackBar(snackBar);
-                              },
-                              confirmAction: "Excluir",
-                              confirmLabel:
-                                  "Tem certeza de que deseja excluir ${filteredContactList.elementAt(index).name} ${filteredContactList.elementAt(index).surname}?",
-                              confirmTitle: "Confirmação de Exclusão",
-                            );
-                          },
-                        ),
-                        color: Colors.red,
-                        icon: Icon(Icons.delete),
+                                  color: Colors.red,
+                                  icon: Icon(Icons.delete),
+                                ),
+                              ),
+                            ],
+                          ),
+                          ContactCard(
+                              contact: filteredContactList.elementAt(index)),
+                        ],
                       ),
-                    ),
-                  ],
-                ),
-                ContactCard(contact: filteredContactList.elementAt(index)),
-              ],
-            ),
-          );
+                    );
+                  },
+                );
+              },
+            );
+          }
         },
       ),
       Positioned(
@@ -103,10 +121,10 @@ class _FavoritesState extends State<Favorites> {
             FloatingActionButton(
               onPressed: () {
                 Navigator.of(context).pushNamed(
-                  '/adicionarContato',
+                  '/input-contact',
                   arguments: () {
                     final snackBar = SnackBar(
-                      content: Text('Contato adicionado com Sucesso!'),
+                      content: Text('Contato adicionado com sucesso!'),
                     );
                     ScaffoldMessenger.of(context).showSnackBar(snackBar);
                   },
