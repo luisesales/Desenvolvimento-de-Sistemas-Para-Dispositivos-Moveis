@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class UpdateContact extends StatefulWidget {
+  //final bool manage;
   final Contact contact;
   const UpdateContact({super.key, required this.contact});
 
@@ -88,8 +89,9 @@ class _UpdateContactState extends State<UpdateContact> {
     _surnameController.text = widget.contact.surname;
     _phoneController.text = widget.contact.phone;
     _emailController.text = widget.contact.email;
-    //_selectImage(widget.contact.avatar);
-    //_savePosition(widget.contact.address!);
+    _pickedImage = widget.contact.avatar;
+    _currPosition = widget.contact.address!;
+
     super.initState();
   }
 
@@ -203,29 +205,31 @@ class _UpdateContactState extends State<UpdateContact> {
               ),
               const SizedBox(height: 32),
               Center(
-                child: ElevatedButton.icon(
-                  onPressed: _submitForm,
-                  icon: const Icon(
-                    Icons.add_circle_outline,
-                    color: Colors.white,
-                  ),
-                  label: const Text(
-                    'Atualizar Contato',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.black,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 20, vertical: 12),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                  ),
-                ),
+                child: 1 == 1
+                    ? ElevatedButton.icon(
+                        onPressed: _submitForm,
+                        icon: const Icon(
+                          Icons.add_circle_outline,
+                          color: Colors.white,
+                        ),
+                        label: const Text(
+                          'Atualizar Contato',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.black,
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 12),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                      )
+                    : Container(),
               ),
             ],
           ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:minha_agenda_app/pages/createContact.dart';
 import 'package:minha_agenda_app/pages/detailContact.dart';
+import 'package:minha_agenda_app/pages/manageContacts.dart';
 import 'package:minha_agenda_app/pages/updateContact.dart';
 import 'package:provider/provider.dart';
 
@@ -8,6 +9,7 @@ import 'package:minha_agenda_app/model/contactList.dart';
 import 'package:minha_agenda_app/utils/routes.dart';
 import 'package:minha_agenda_app/pages/home.dart';
 import 'package:minha_agenda_app/model/contact.dart';
+import 'package:minha_agenda_app/model/updateArguments.dart';
 
 void main() {
   runApp(MyApp());
@@ -53,6 +55,7 @@ class _MyAppState extends State<MyApp> {
                 ModalRoute.of(context)!.settings.arguments as Contact;
             return UpdateContact(contact: contact);
           },
+          Routes.MANAGE_CONTACT: (context) => ManageContacts()
         },
         debugShowCheckedModeBanner: false,
       ),

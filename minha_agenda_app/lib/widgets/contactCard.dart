@@ -1,8 +1,10 @@
 import 'dart:io';
 
-import 'package:minha_agenda_app/model/contact.dart';
 import 'package:flutter/material.dart';
+import 'package:minha_agenda_app/model/contact.dart';
 import 'package:minha_agenda_app/pages/detailContact.dart';
+import 'package:provider/provider.dart';
+import 'package:minha_agenda_app/model/contactList.dart';
 
 class ContactCard extends StatelessWidget {
   const ContactCard({super.key, required this.contact});
@@ -78,7 +80,6 @@ class ContactCard extends StatelessWidget {
                     )),
               )
             ]),
-            //Text(place.titulo),
             Padding(
               padding: EdgeInsets.all(20),
               child: Row(
@@ -112,11 +113,27 @@ class ContactCard extends StatelessWidget {
                 children: <Widget>[
                   Row(
                     children: <Widget>[
+                      IconButton(
+                        icon: Icon(Icons.block_outlined),
+                        onPressed: () {
+                          context.read<ContactList>().block(contact);
+                        },
+                      ),
+                      IconButton(
+                        icon: Icon(Icons.star_border),
+                        onPressed: () {
+                          context.read<ContactList>().favorite(contact);
+                        },
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: <Widget>[
                       Icon(Icons.mode_comment_rounded),
                       SizedBox(
                         width: 6,
                       ),
-                      ReturnStatusText(contact.status)
+                      ReturnStatusText(contact.status),
                     ],
                   ),
                 ],

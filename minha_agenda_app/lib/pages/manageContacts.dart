@@ -2,21 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:minha_agenda_app/pages/blocked.dart';
 import 'package:minha_agenda_app/pages/createContact.dart';
 import 'package:minha_agenda_app/pages/favorites.dart';
-import 'package:minha_agenda_app/pages/homeContent.dart';
+import 'package:minha_agenda_app/pages/HomeContent.dart';
 import 'package:minha_agenda_app/widgets/CustomNavigationBar.dart';
 import 'package:minha_agenda_app/widgets/drawer.dart';
 import 'package:provider/provider.dart';
 import 'package:minha_agenda_app/model/contactList.dart';
 import 'package:minha_agenda_app/utils/routes.dart';
 
-class Home extends StatefulWidget {
-  const Home({super.key});
+class ManageContacts extends StatefulWidget {
+  const ManageContacts({super.key});
 
   @override
-  _HomeState createState() => _HomeState();
+  _ManageContactsState createState() => _ManageContactsState();
 }
 
-class _HomeState extends State<Home> {
+class _ManageContactsState extends State<ManageContacts> {
   int _selectedIndex = 0; // índice selecionado no BottomNavigationBar
 
   void _onItemTapped(int index) {
@@ -31,12 +31,12 @@ class _HomeState extends State<Home> {
 
     List<Widget> _pages = [
       HomeContent(
-        manage: false,
+        manage: true,
       ),
       Favorites(
-        manage: false,
+        manage: true,
       ),
-      Blocked(manage: false)
+      Blocked(manage: true)
     ];
 
     if (_selectedIndex == 0 || _selectedIndex == 2) {
@@ -44,7 +44,7 @@ class _HomeState extends State<Home> {
         appBar: AppBar(
           backgroundColor: Colors.brown,
           title: Text(
-            "Visualizar Contatos",
+            "Gerenciar Contatos",
             style: TextStyle(color: Colors.white),
           ),
         ),
@@ -64,7 +64,7 @@ class _HomeState extends State<Home> {
       appBar: AppBar(
         backgroundColor: Colors.brown,
         title: Text(
-          "Visualizar Contatos",
+          "Gerenciar Contatos",
           style: TextStyle(color: Colors.white),
         ),
       ),

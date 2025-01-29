@@ -1,11 +1,11 @@
 import 'dart:io';
 
+import 'package:flutter/material.dart';
 import 'package:minha_agenda_app/model/contact.dart';
 import 'package:minha_agenda_app/model/contactList.dart';
-import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class DetailContact extends StatelessWidget {
+class DetailContact extends StatefulWidget {
   final Contact contact;
 
   const DetailContact({
@@ -13,6 +13,11 @@ class DetailContact extends StatelessWidget {
     required this.contact,
   });
 
+  @override
+  _DetailContactState createState() => _DetailContactState();
+}
+
+class _DetailContactState extends State<DetailContact> {
   Text ReturnStatusText(int status) {
     if (status == 1) {
       return Text(style: TextStyle(color: Colors.green), "NORMAL");
@@ -29,29 +34,32 @@ class DetailContact extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.brown,
         title: Text(
-          "${contact.name} ${contact.surname}",
+          "${widget.contact.name} ${widget.contact.surname}",
           style: TextStyle(color: Colors.white),
         ),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.edit),
+            onPressed: () {
+              Navigator.of(context).pushReplacementNamed(
+                '/update-contact',
+                arguments: widget.contact,
+              );
+            },
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            Container(
-              height: 300,
-              width: double.infinity,
-              child: contact.avatar.path.startsWith('http')
-                  ? Image.network(
-                      contact.avatar.path,
-                      height: 300,
-                      width: double.infinity,
-                      fit: BoxFit.cover,
-                    )
-                  : Image.file(
-                      contact.avatar,
-                      height: 300,
-                      width: double.infinity,
-                      fit: BoxFit.cover,
-                    ),
+            SizedBox(
+              height: 10,
+            ),
+            CircleAvatar(
+              radius: 100,
+              backgroundImage: widget.contact.avatar.path.startsWith('http')
+                  ? NetworkImage(widget.contact.avatar.path)
+                  : FileImage(widget.contact.avatar) as ImageProvider,
             ),
             Container(
               margin: const EdgeInsets.symmetric(vertical: 10),
@@ -83,7 +91,7 @@ class DetailContact extends StatelessWidget {
                         ],
                       ),
                       SizedBox(height: 4),
-                      Text('${contact.name} ${contact.surname}'),
+                      Text('${widget.contact.name} ${widget.contact.surname}'),
                       SizedBox(height: 16),
                       Row(
                         children: [
@@ -93,7 +101,7 @@ class DetailContact extends StatelessWidget {
                         ],
                       ),
                       SizedBox(height: 4),
-                      Text(contact.email),
+                      Text(widget.contact.email),
                       SizedBox(height: 16),
                       Row(
                         children: [
@@ -103,7 +111,7 @@ class DetailContact extends StatelessWidget {
                         ],
                       ),
                       SizedBox(height: 4),
-                      Text(contact.phone),
+                      Text(widget.contact.phone),
                       SizedBox(height: 16),
                       Row(
                         children: [
@@ -113,7 +121,7 @@ class DetailContact extends StatelessWidget {
                         ],
                       ),
                       SizedBox(height: 4),
-                      Text(contact.address!.address),
+                      Text(widget.contact.address!.address),
                       Row(
                         children: [
                           Icon(Icons.pin_drop_rounded),
@@ -122,7 +130,7 @@ class DetailContact extends StatelessWidget {
                         ],
                       ),
                       SizedBox(height: 4),
-                      Text(contact.address!.latitude.toString()),
+                      Text(widget.contact.address!.latitude.toString()),
                       SizedBox(height: 8),
                       Row(
                         children: [
@@ -132,7 +140,7 @@ class DetailContact extends StatelessWidget {
                         ],
                       ),
                       SizedBox(height: 4),
-                      Text(contact.address!.longitude.toString()),
+                      Text(widget.contact.address!.longitude.toString()),
                       SizedBox(height: 8),
                       Row(
                         children: [
@@ -142,7 +150,7 @@ class DetailContact extends StatelessWidget {
                         ],
                       ),
                       SizedBox(height: 4),
-                      ReturnStatusText(contact.status),
+                      ReturnStatusText(widget.contact.status),
                       SizedBox(height: 8),
                     ],
                   ),
@@ -159,7 +167,9 @@ class DetailContact extends StatelessWidget {
             bottom: 20,
             child: FloatingActionButton(
               onPressed: () {
-                context.read<ContactList>().block(contact);
+                setState(() {
+                  context.read<ContactList>().block(widget.contact);
+                });
               },
               child: Icon(Icons.block_outlined),
             ),
@@ -169,7 +179,9 @@ class DetailContact extends StatelessWidget {
             bottom: 20,
             child: FloatingActionButton(
               onPressed: () {
-                context.read<ContactList>().favorite(contact);
+                setState(() {
+                  context.read<ContactList>().favorite(widget.contact);
+                });
               },
               child: Icon(Icons.star_border),
             ),

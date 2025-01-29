@@ -3,4 +3,5 @@ class Routes {
   static const DETAIL_CONTACT = '/contact';
   static const INPUT_CONTACT = '/input-contact';
   static const UPDATE_CONTACT = '/update-contact';
+  static const MANAGE_CONTACT = '/manage-contact';
 }
