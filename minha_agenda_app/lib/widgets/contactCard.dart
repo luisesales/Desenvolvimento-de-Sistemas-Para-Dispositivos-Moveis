@@ -127,15 +127,21 @@ class ContactCard extends StatelessWidget {
                       ),
                     ],
                   ),
-                  Row(
-                    children: <Widget>[
-                      Icon(Icons.mode_comment_rounded),
-                      SizedBox(
-                        width: 6,
-                      ),
-                      ReturnStatusText(contact.status),
-                    ],
-                  ),
+                  contact.status != 1
+                      ? Row(
+                          children: <Widget>[
+                            Icon(Icons.mode_comment_rounded),
+                            SizedBox(
+                              width: 6,
+                            ),
+                            ReturnStatusText(contact.status),
+                          ],
+                        )
+                      : Container(
+                          child: SizedBox(
+                            width: 96,
+                          ),
+                        ),
                 ],
               ),
             ),
