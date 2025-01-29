@@ -9,7 +9,6 @@ import 'package:minha_agenda_app/model/contactList.dart';
 import 'package:minha_agenda_app/utils/routes.dart';
 import 'package:minha_agenda_app/pages/home.dart';
 import 'package:minha_agenda_app/model/contact.dart';
-import 'package:minha_agenda_app/model/updateArguments.dart';
 
 void main() {
   runApp(MyApp());

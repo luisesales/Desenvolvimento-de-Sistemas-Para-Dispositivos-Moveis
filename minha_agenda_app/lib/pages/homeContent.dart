@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:minha_agenda_app/model/contact.dart';
 import 'package:minha_agenda_app/model/contactList.dart';
-import 'package:minha_agenda_app/model/updateArguments.dart';
 import 'package:minha_agenda_app/pages/updateContact.dart';
 import 'package:minha_agenda_app/widgets/contactCard.dart';
 import 'package:minha_agenda_app/widgets/modalBottomSheet.dart';
