@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:minha_agenda_app/model/contact.dart';
 import 'package:minha_agenda_app/model/contactList.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class DetailContact extends StatefulWidget {
   final Contact contact;
@@ -103,15 +104,31 @@ class _DetailContactState extends State<DetailContact> {
                       SizedBox(height: 4),
                       Text(widget.contact.email),
                       SizedBox(height: 16),
-                      Row(
-                        children: [
-                          Icon(Icons.call_rounded),
-                          SizedBox(width: 8),
-                          Text('Contato'),
-                        ],
+                      GestureDetector(
+                        onTap: () async {
+                          final Uri url =
+                              Uri(scheme: 'tel', path: widget.contact.phone);
+                          if (await canLaunchUrl(url)) {
+                            await launchUrl(url);
+                          } else {
+                            print("\n\n\nCannot Launch this URL \n\n\n");
+                          }
+                        },
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                Icon(Icons.call_rounded),
+                                SizedBox(width: 8),
+                                Text('Contato'),
+                              ],
+                            ),
+                            SizedBox(height: 4),
+                            Text(widget.contact.phone),
+                          ],
+                        ),
                       ),
-                      SizedBox(height: 4),
-                      Text(widget.contact.phone),
                       SizedBox(height: 16),
                       Row(
                         children: [
